@@ -1,0 +1,29 @@
+workflow do coder:
+1. "hey, tenho uma ideia nova":
+   - git checkout -b <nome-do-branch-com-ideia-nova>
+   - git status (estou no branch certo? se sim, siga)
+2. criar ficheiro(s) novo(s)
+3. git add <ficheiros novos>
+4. git status
+5. "tá tudo bem adicionado"
+6. git commit
+  - dar um título claro e conciso ao commit (max 72 caracteres +-)
+  - resto da commit msg: se necessário, explicar melhor o que se passa no commit
+7. git status
+8. git push origin <nome-do-branch-com-ideia-nova>
+9. "FAÇAM GIT PULL"
+
+workflow dos outros que vão ver código novo:
+1. git status
+  - se estou no master, git pull
+  - se não, "git stash" se têm alterações que não querem guardar num commit ainda, ou façam commit.
+    mais tarde, podem sacar as alterações mudando de volta para o branch onde estavam e fazendo "git stash pop"
+2. ver as alterações, se necessário mudar o vosso código para funcionar com a cena nova ou queixar-se ao autor
+3. digam ao git merger para ver se está tudo a funcionar e fazer então merge para o branch develop
+4. assim que estiver tudo merged no branch develop, voltam para os vossos branches e fazem "git merge develop" para conter
+   as novas alterações feitas integradas com o vosso código
+
+
+se o develop estiver com as features desejadas e não houver erros graves ao testar, mete-se no master.
+
+simples :D

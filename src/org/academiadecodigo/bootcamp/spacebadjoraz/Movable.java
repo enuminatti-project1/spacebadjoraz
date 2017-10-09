@@ -5,6 +5,9 @@ package org.academiadecodigo.bootcamp.spacebadjoraz;
  */
 public interface Movable {
 
+    /**
+     * Any object that's movable will have this behavior
+     */
     void move();
 
 }

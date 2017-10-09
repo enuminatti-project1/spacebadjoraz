@@ -5,5 +5,11 @@ package org.academiadecodigo.bootcamp.spacebadjoraz;
  */
 public interface Shootable {
 
+    /**
+     * Any object that can shoot will implement this.
+     *
+     * This can remain unusable for now until the
+     * enemies learn how to shoot too.
+     */
     void shoot();
 }

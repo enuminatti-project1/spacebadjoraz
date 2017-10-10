@@ -3,8 +3,6 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -16,7 +14,7 @@ public class Bullet implements Movable {
      * <p>
      * TODO: different bullets could move at different speeds
      */
-    private int speed = 1;
+    private int speed = 20;
 
 
     /**

@@ -84,7 +84,7 @@ public class Game {
             }
             getBullet();
 
-            Thread.sleep(10);
+            Thread.sleep(33);
         }
     }
 

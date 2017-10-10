@@ -32,8 +32,8 @@ public abstract class Ship implements Movable, Shootable {
          */
 
         Direction(int x, int y) {
-            this.x = x;
-            this.y = y;
+            this.x = x * 8;
+            this.y = y * 8;
         }
 
         public int getX() {

@@ -1,6 +1,8 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -22,6 +24,8 @@ public class Bullet implements Movable {
      */
     private boolean shootUp;
 
+    private Ellipse bullet;
+
     /**
      * Constructor for bullet used by PlayerShip and, in the future, EnemyShip
      *
@@ -29,6 +33,10 @@ public class Bullet implements Movable {
      */
     public Bullet(boolean shootUp) {
         this.shootUp = shootUp;
+        bullet = new Ellipse(400,300, 10,10);
+        bullet.setColor(Color.YELLOW);
+        bullet.fill();
+
     }
 
     /**
@@ -37,6 +45,7 @@ public class Bullet implements Movable {
     @Override
     public void move () {
         if(shootUp){
+            bullet.translate(0, -speed);
             //bullet goes up
         }
         //bullet goes down

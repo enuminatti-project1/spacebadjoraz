@@ -2,40 +2,20 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by Someone who is not me on 09/10/17.
  */
 public class PlayerShip extends Ship implements KeyboardHandler {
 
-    /**
-     * This contains valid directions that the player can move to.
-     */
-    private enum Direction{
-        RIGHT,
-        LEFT;
+    private Keyboard key;
+    private Picture pic;    //Picture of the Ship
 
-        /**
-         * When the keyboard is implemented, this will be enabled
-         * if you pressed the corresponding key.
-         *
-         * While it's enabled, the player ship will move in these directions
-         * on every frame.
-         *
-         * When disabled, it'll stop moving in that direction.
-         */
-        private boolean enabled;
-
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-        }
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-    }
 
     /**
      * This will keep the bullet the player shot until it's retrieved by Game.
@@ -43,12 +23,11 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * When Game gets it, it'll handle the moving of the bullet and the player
      * doesn't need it anymore.
      */
-    private Bullet bullet;
+    private boolean bullet;
 
     /**
      * This contains the ship's graphical representation.
      */
-    private Rectangle ship;
 
     /**
      * Initialize the player's ship and graphical representation.
@@ -61,9 +40,39 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @param y is the ship's starting position on the vertical axis
      */
     public PlayerShip(int x, int y) {
-        ship = new Rectangle(x, y, 50, 100);
-        ship.setColor(Color.RED);
-        ship.fill();
+    //public PlayerShip(int x, int y, String picPath){
+        Rectangle r = new Rectangle(x, y, 50, 60);
+        r.setColor(Color.RED);
+        r.fill();
+        super.setShip(r);
+        configKeyboard();
+
+    }
+
+    /**
+     * Set the Keyboard keys do handle
+     */
+    public void configKeyboard() {
+
+        this.key = new Keyboard(this);
+
+        int[] kArray = {KeyboardEvent.KEY_D, KeyboardEvent.KEY_A, KeyboardEvent.KEY_S,
+                KeyboardEvent.KEY_W, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_UP,
+                KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE};
+
+        for (int i :kArray) {
+
+            KeyboardEvent k = new KeyboardEvent();
+            k.setKey(i);
+            k.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+            key.addEventListener(k);
+
+            k = new KeyboardEvent();
+            k.setKey(i);
+            k.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+            key.addEventListener(k);
+        }
+
     }
 
     /**
@@ -71,7 +80,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * Since it's the player's it'll shoot up.
      */
     public void shoot(){
-        this.bullet = new Bullet(true);
+        this.bullet = true;
     }
 
     /**
@@ -80,29 +89,12 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @return the bullet that was created
      */
     public Bullet getBullet(){
-        Bullet currentBullet = bullet;
-        this.bullet = null;
-        return currentBullet;
-    }
-
-    /**
-     * This will move the player to the enabled direction(s).
-     *
-     * If none are enabled, stand still.
-     */
-    @Override
-    public void move() {
-        if (Direction.LEFT.isEnabled()) {
-            System.out.println("moving left");
-        } else if (Direction.RIGHT.isEnabled()) {
-            System.out.println("moving right");
-        } else {
-            System.out.println("standing still");
+        if(bullet){
+            bullet = false;
+            return new Bullet(true);
         }
+        return null;
     }
-
-    // TODO: add handlers to needed keys
-    // TODO: need to listen for keys pressed and released
 
     /**
      * This listens to pressed keys.
@@ -120,6 +112,17 @@ public class PlayerShip extends Ship implements KeyboardHandler {
             case KeyboardEvent.KEY_RIGHT:
             case KeyboardEvent.KEY_D:
                 Direction.RIGHT.setEnabled(true);
+                break;
+            case KeyboardEvent.KEY_UP:
+            case KeyboardEvent.KEY_W:
+                Direction.UP.setEnabled(true);
+                break;
+            case KeyboardEvent.KEY_DOWN:
+            case KeyboardEvent.KEY_S:
+                Direction.DOWN.setEnabled(true);
+                break;
+            case KeyboardEvent.KEY_SPACE:
+                shoot();
                 break;
         }
     }
@@ -141,6 +144,16 @@ public class PlayerShip extends Ship implements KeyboardHandler {
             case KeyboardEvent.KEY_D:
                 Direction.RIGHT.setEnabled(false);
                 break;
+            case KeyboardEvent.KEY_UP:
+            case KeyboardEvent.KEY_W:
+                Direction.UP.setEnabled(false);
+                break;
+            case KeyboardEvent.KEY_DOWN:
+            case KeyboardEvent.KEY_S:
+                Direction.DOWN.setEnabled(false);
+                break;
+
+
         }
     }
 }

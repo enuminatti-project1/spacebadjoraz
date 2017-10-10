@@ -18,7 +18,7 @@ public class Bullet implements Movable {
     /**
      * Direction the bullet travels to
      *
-     * TODO: bullets can move diagonally
+     * TODO: bullets cant move diagonally
      */
     private boolean shootUp;
 

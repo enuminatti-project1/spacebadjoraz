@@ -7,6 +7,8 @@ import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.ShipFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
+import java.util.ArrayList;
+
 /**
  * Created by Someone who is not me on 09/10/17.
  */
@@ -28,6 +30,7 @@ public class Game {
      * For now, this can just contain a single bullet.
      */
     private Bullet bullet;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
 
     /**
      * The background for the game
@@ -39,7 +42,7 @@ public class Game {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Game game = new Game();
         game.init();
         game.play();
@@ -66,14 +69,19 @@ public class Game {
      * The game loop
      * It runs until there's no enemies.
      */
-    public void play() {
+    public void play() throws InterruptedException {
         while (enemy != null) {
             enemy.move();
             player.move();
             if (bullet != null) {
                 bullet.move();
             }
-            getBullet();
+
+            if(bullet == null) {
+                getBullet();
+            }
+
+            Thread.sleep(10);
         }
     }
 

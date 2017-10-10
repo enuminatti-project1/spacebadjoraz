@@ -7,7 +7,7 @@ public class EnemyShip extends Ship {
 
     /**
      * The enemy can't shoot for now.
-     * TODO: make the enemy shoot
+     * TODO: make the enemy shoot after mvp
      */
     @Override
     public void shoot() {

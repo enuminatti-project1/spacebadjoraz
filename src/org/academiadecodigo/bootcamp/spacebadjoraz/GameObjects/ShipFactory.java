@@ -12,7 +12,7 @@ public class ShipFactory {
      */
     public static EnemyShip createEnemy(){
 
-        return new EnemyShip();
+        return new EnemyShip(400, 30);
 
     }
 }

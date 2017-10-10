@@ -7,7 +7,7 @@ import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.ShipFactory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -30,7 +30,12 @@ public class Game {
      * For now, this can just contain a single bullet.
      */
     private Bullet bullet;
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+
+
+    /**
+     * This will contain all the bullets shot.
+     */
+    private LinkedList<Bullet> bullets = new LinkedList<>();
 
     /**
      * The background for the game
@@ -73,13 +78,11 @@ public class Game {
         while (enemy != null) {
             enemy.move();
             player.move();
-            if (bullet != null) {
-                bullet.move();
-            }
 
-            if(bullet == null) {
-                getBullet();
+            for (Bullet b : bullets ) {
+                b.move();
             }
+            getBullet();
 
             Thread.sleep(10);
         }
@@ -90,7 +93,10 @@ public class Game {
      * it can move the bullet.
      */
     public void getBullet() {
-        this.bullet = player.getBullet();
+        Bullet newBullet = player.getBullet();
+        if(newBullet != null) {
+            bullets.add(newBullet);
+        }
     }
 
 }

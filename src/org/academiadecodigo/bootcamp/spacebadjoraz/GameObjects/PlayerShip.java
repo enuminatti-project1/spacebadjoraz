@@ -18,12 +18,12 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
 
     /**
-     * This will keep the bullet the player shot until it's retrieved by Game.
+     * This will keep the shooting the player shot until it's retrieved by Game.
      *
-     * When Game gets it, it'll handle the moving of the bullet and the player
+     * When Game gets it, it'll handle the moving of the shooting and the player
      * doesn't need it anymore.
      */
-    private boolean bullet;
+    private boolean shooting;
 
     /**
      * This contains the ship's graphical representation.
@@ -76,24 +76,24 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     }
 
     /**
-     * Create a new bullet shot by the player.
+     * Create a new shooting shot by the player.
      * Since it's the player's it'll shoot up.
      */
     public void shoot(){
-        this.bullet = true;
+        this.shooting = true;
     }
 
     /**
-     * This sends to Game the created bullet.
+     * This sends to Game the created shooting.
      *
-     * @return the bullet that was created
+     * @return the shooting that was created
      */
     public Bullet getBullet(){
-        if(bullet){
-            bullet = false;
+        if(shooting){
+            shooting = false;
             int x = getShip().getX();
             int y = getShip().getY();
-            return new Bullet(x,y,true);
+            return new Bullet(x, y,true);
         }
         return null;
     }

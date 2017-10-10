@@ -99,4 +99,8 @@ public class Game {
         }
     }
 
+
+    // TODO: Create a fortress colidable, with health
+
+
 }

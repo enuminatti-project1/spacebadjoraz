@@ -28,6 +28,8 @@ public class Bullet implements Movable {
 
     private Ellipse bullet;
 
+    private static final int SIZE = 8;
+
     /**
      * Constructor for bullet used by PlayerShip and, in the future, EnemyShip
      *
@@ -35,7 +37,7 @@ public class Bullet implements Movable {
      */
     public Bullet(int x, int y, boolean shootUp) {
         this.shootUp = shootUp;
-        bullet = new Ellipse(x, y, 5, 5);
+        bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
         bullet.setColor(Color.YELLOW);
         bullet.fill();
 

@@ -19,7 +19,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     /**
      * This will keep the shooting the player shot until it's retrieved by Game.
-     *
+     * <p>
      * When Game gets it, it'll handle the moving of the shooting and the player
      * doesn't need it anymore.
      */
@@ -31,7 +31,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     /**
      * Initialize the player's ship and graphical representation.
-     *
+     * <p>
      * TODO: The Game knows the background's boundaries, so it could just
      * pass the background itself and then the PlayerShip knows where
      * to start too.
@@ -40,7 +40,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @param y is the ship's starting position on the vertical axis
      */
     public PlayerShip(int x, int y) {
-    //public PlayerShip(int x, int y, String picPath){
+        //public PlayerShip(int x, int y, String picPath){
         Rectangle r = new Rectangle(x, y, 50, 60);
         r.setColor(Color.RED);
         r.fill();
@@ -60,7 +60,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
                 KeyboardEvent.KEY_W, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_UP,
                 KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE};
 
-        for (int i :kArray) {
+        for (int i : kArray) {
 
             KeyboardEvent k = new KeyboardEvent();
             k.setKey(i);
@@ -79,7 +79,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * Create a new shooting shot by the player.
      * Since it's the player's it'll shoot up.
      */
-    public void shoot(){
+    public void shoot() {
         this.shooting = true;
     }
 
@@ -88,12 +88,12 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      *
      * @return the shooting that was created
      */
-    public Bullet getBullet(){
-        if(shooting){
+    public Bullet getBullet() {
+        if (shooting) {
             shooting = false;
-            int x = getShip().getX();
+            int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
-            return new Bullet(x, y,true);
+            return new Bullet(x, y, true);
         }
         return null;
     }

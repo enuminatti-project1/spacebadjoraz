@@ -3,6 +3,8 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -11,7 +13,7 @@ public class Bullet implements Movable {
 
     /**
      * Speed the bullet travels at.
-     *
+     * <p>
      * TODO: different bullets could move at different speeds
      */
     private int speed = 1;
@@ -19,7 +21,7 @@ public class Bullet implements Movable {
 
     /**
      * Direction the bullet travels to
-     *
+     * <p>
      * TODO: bullets cant move diagonally
      */
     private boolean shootUp;
@@ -31,11 +33,12 @@ public class Bullet implements Movable {
      *
      * @param shootUp True if bullet shoots up, False if it shoots down
      */
-    public Bullet(boolean shootUp) {
+    public Bullet(int x, int y, boolean shootUp) {
         this.shootUp = shootUp;
-        bullet = new Ellipse(400,300, 10,10);
+        bullet = new Ellipse(x, y, 5, 5);
         bullet.setColor(Color.YELLOW);
         bullet.fill();
+
 
     }
 
@@ -43,8 +46,8 @@ public class Bullet implements Movable {
      * Make the bullet move
      */
     @Override
-    public void move () {
-        if(shootUp){
+    public void move() {
+        if (shootUp) {
             bullet.translate(0, -speed);
             //bullet goes up
         }

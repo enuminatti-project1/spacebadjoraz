@@ -91,10 +91,13 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     public Bullet getBullet(){
         if(bullet){
             bullet = false;
-            return new Bullet(true);
+            int x = getShip().getX();
+            int y = getShip().getY();
+            return new Bullet(x,y,true);
         }
         return null;
     }
+
 
     /**
      * This listens to pressed keys.

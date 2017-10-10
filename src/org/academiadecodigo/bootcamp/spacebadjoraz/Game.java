@@ -42,6 +42,10 @@ public class Game {
      */
     private Rectangle background;
 
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+    public static final int PADDING = 10;
+
     /**
      * Entry door to the game :'D
      *
@@ -61,7 +65,7 @@ public class Game {
      * Initialize game objects and background
      */
     public void init() {
-        background = new Rectangle(10, 10, 800, 600);
+        background = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
         background.setColor(Color.BLACK);
         background.fill();
 
@@ -99,8 +103,14 @@ public class Game {
         }
     }
 
+    public int getRightEdge() {
+        return background.getX() + background.getWidth();
+    }
+
+    public int getBottomEdge() {
+        return background.getY() + background.getHeight();
+    }
 
     // TODO: Create a fortress colidable, with health
-
 
 }

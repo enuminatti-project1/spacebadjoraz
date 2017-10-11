@@ -11,7 +11,9 @@ public abstract class Ship implements Movable, Shootable {
     // TODO: add common behavior between PlayerShip and EnemyShips
 
     private Rectangle ship;
-    private int x, y, width, height;
+    //private int x, y, width, height;
+    private Position limits;
+    //private Position position;
     private int speed;
 
     /**
@@ -31,11 +33,15 @@ public abstract class Ship implements Movable, Shootable {
     }
 
     @Override
-    public void setLimits(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    public void setLimits(Position limits) {
+        this.limits = limits;
+    }
+
+    @Override
+    public Position getPosition(){
+        if (ship == null)
+            return new Position(0,0,0,0);
+        return new Position(ship.getX(), ship.getY(), ship.getWidth(), ship.getHeight());
     }
 
     public void setSpeed(int speed) {
@@ -51,35 +57,35 @@ public abstract class Ship implements Movable, Shootable {
             return;
         }
 
-        for (PlayerShip.Direction dir : PlayerShip.Direction.values()){
+        for (Direction dir : Direction.values()){
             if (dir.isEnabled()){
 
                 switch (dir){
 
                     case RIGHT:
-                        if(ship.getX() + ship.getWidth() + speed > this.x + this.width){
-                            getShip().translate((this.width  + this.x) - (ship.getX() + ship.getWidth()), 0);
+                        if(ship.getX() + ship.getWidth() + speed > limits.getX() + limits.getWidth()){
+                            getShip().translate((limits.getWidth()  + limits.getX()) - (ship.getX() + ship.getWidth()), 0);
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case LEFT:
-                        if(ship.getX() - speed < this.x){
-                            getShip().translate(this.x - ship.getX(), 0);
+                        if(ship.getX() - speed < limits.getX()){
+                            getShip().translate(limits.getX() - ship.getX(), 0);
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case UP:
-                        if(ship.getY() - speed < this.y){
-                            getShip().translate(0, this.y - ship.getY());
+                        if(ship.getY() - speed < limits.getY()){
+                            getShip().translate(0, limits.getY() - ship.getY());
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case DOWN:
-                        if(ship.getY() + ship.getHeight() + speed > this.y + this.height){
-                            getShip().translate(0, ((this.height + this.y) - (ship.getY() + ship.getHeight())));
+                        if(ship.getY() + ship.getHeight() + speed > limits.getY() + limits.getHeight()){
+                            getShip().translate(0, ((limits.getHeight() + limits.getY()) - (ship.getY() + ship.getHeight())));
                             dir.setEnabled(false);
                             continue;
                         }

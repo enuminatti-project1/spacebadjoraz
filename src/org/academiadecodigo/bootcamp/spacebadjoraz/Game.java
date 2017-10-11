@@ -81,6 +81,9 @@ public class Game {
 
             for (Bullet b : bullets ) {
                 b.move();
+                if(b.getPosition().isInside(enemy.getPosition())){
+                    System.out.println("bum!");
+                }
             }
             getBullet();
 

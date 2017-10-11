@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -47,7 +48,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         r.setColor(Color.RED);
         r.fill();
         super.setShip(r);
-        super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
+        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(8);
         configKeyboard();
         bullets = BULLETS;

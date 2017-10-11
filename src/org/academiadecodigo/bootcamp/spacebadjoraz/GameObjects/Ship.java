@@ -10,61 +10,6 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 public abstract class Ship implements Movable, Shootable {
     // TODO: add common behavior between PlayerShip and EnemyShips
 
-    protected enum Direction{
-        RIGHT(1,0),
-        LEFT(-1,0),
-        UP(0,-1),
-        DOWN(0,1),
-        NONE(0,0);
-
-        private int x;
-        private int y;
-        private boolean enabled;
-
-        /**
-         * When the keyboard is implemented, this will be enabled
-         * if you pressed the corresponding key.
-         *
-         * While it's enabled, the player ship will move in these directions
-         * on every frame.
-         *
-         * When disabled, it'll stop moving in that direction.
-         */
-
-        Direction(int x, int y) {
-            this.x = x * 8;
-            this.y = y * 8;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        /**
-         * Enable or disable the direction of the ship
-         * When ther's no direction defined enable 'NONE' direction
-         * @param enabled
-         */
-        public void setEnabled(boolean enabled) {
-            this.enabled = enabled;
-            if (this.enabled == false) {
-                NONE.enabled = true;
-            }
-        }
-
-        /**
-         *
-         * @return status of the Direction
-         */
-        public boolean isEnabled() {
-            return enabled;
-        }
-    }
-
     private Rectangle ship;
     private int x, y, width, height;
     private int speed;
@@ -105,11 +50,46 @@ public abstract class Ship implements Movable, Shootable {
         if (ship == null) {
             return;
         }
+
         for (PlayerShip.Direction dir : PlayerShip.Direction.values()){
             if (dir.isEnabled()){
-                getShip().translate(dir.getX(), dir.getY());
+
+                switch (dir){
+
+                    case RIGHT:
+                        if(ship.getX() + ship.getWidth() + speed > this.x + this.width){
+                            getShip().translate((this.width  + this.x) - (ship.getX() + ship.getWidth()), 0);
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case LEFT:
+                        if(ship.getX() - speed < this.x){
+                            getShip().translate(this.x - ship.getX(), 0);
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case UP:
+                        if(ship.getY() - speed < this.y){
+                            getShip().translate(0, this.y - ship.getY());
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case DOWN:
+                        if(ship.getY() + ship.getHeight() + speed > this.y + this.height){
+                            getShip().translate(0, ((this.height + this.y) - (ship.getY() + ship.getHeight())));
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case NONE:
+                        break;
+                }
+
+                getShip().translate(dir.getX() * speed, dir.getY() * speed);
             }
         }
-
     }
 }

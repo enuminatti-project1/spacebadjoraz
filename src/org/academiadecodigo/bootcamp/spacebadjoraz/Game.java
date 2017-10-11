@@ -99,6 +99,15 @@ public class Game {
         t.setColor(Color.GREEN);
         t.draw();
         System.out.println("we win");
+        while (true) {
+            if (t.getWidth() > background.getWidth() ||
+                    t.getHeight() > background.getHeight()) {
+                break;
+            }
+            t.grow(10,10);
+            Thread.sleep(33);
+        }
+        System.exit(0);
     }
 
     /**

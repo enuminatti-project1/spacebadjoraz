@@ -25,6 +25,8 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * doesn't need it anymore.
      */
     private boolean shooting;
+    public static final int BULLETS = 5;
+    private int bullets;
 
     /**
      * This contains the ship's graphical representation.
@@ -48,6 +50,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
         super.setSpeed(8);
         configKeyboard();
+        bullets = BULLETS;
     }
 
     /**
@@ -86,6 +89,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     public void stopShooting() {
         this.shooting = false;
+        bullets = BULLETS;
     }
 
     /**
@@ -94,9 +98,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @return the shooting that was created
      */
     public Bullet getBullet() {
-        if (shooting) {
+        if (shooting && bullets > 0) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
+            bullets --;
             return new Bullet(x, y, true);
         }
         return null;

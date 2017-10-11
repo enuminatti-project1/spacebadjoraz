@@ -25,6 +25,11 @@ public class EnemyShip extends Ship {
 
     }
 
+    @Override
+    public void stopShooting() {
+
+    }
+
     /**
      * The enemy can't move for now.
      * TODO: make the enemy move

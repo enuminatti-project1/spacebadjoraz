@@ -37,11 +37,20 @@ public abstract class Ship implements Movable, Shootable {
         this.limits = limits;
     }
 
+    public Position getLimits() {
+        return limits;
+    }
+
     @Override
     public Position getPosition(){
         if (ship == null)
             return new Position(0,0,0,0);
         return new Position(ship.getX(), ship.getY(), ship.getWidth(), ship.getHeight());
+
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void setSpeed(int speed) {

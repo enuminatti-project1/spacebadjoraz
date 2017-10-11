@@ -20,7 +20,7 @@ public class Bullet implements Movable {
     /**
      * Direction the bullet travels to
      * <p>
-     * TODO: bullets cant move diagonally
+     * TODO: bullets can move diagonally
      */
     private boolean shootUp;
 
@@ -38,8 +38,6 @@ public class Bullet implements Movable {
         bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
         bullet.setColor(Color.YELLOW);
         bullet.fill();
-
-
     }
 
     /**

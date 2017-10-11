@@ -79,13 +79,17 @@ public class Game {
             for (Bullet b : bullets ) {
                 b.move();
                 if(b.getPosition().isInside(enemy.getPosition())){
+                    enemy.getShip().delete();
                     System.out.println("bum!");
+                    enemy = null;
+                    break;
                 }
             }
             getBullet();
 
             Thread.sleep(33);
         }
+        System.out.println("we win");
     }
 
     /**

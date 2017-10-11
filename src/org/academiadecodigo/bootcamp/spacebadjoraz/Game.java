@@ -65,8 +65,8 @@ public class Game {
         background.setColor(Color.BLACK);
         background.fill();
 
-        this.enemy = ShipFactory.createEnemy();
-        this.player = new PlayerShip((int)(background.getWidth()/2.0), 500);
+        this.enemy = ShipFactory.createEnemy(background);
+        this.player = new PlayerShip(background);
     }
 
 

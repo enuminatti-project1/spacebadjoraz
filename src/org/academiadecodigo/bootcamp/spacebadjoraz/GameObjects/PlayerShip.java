@@ -36,9 +36,16 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     private int bulletsLeftToShoot;
 
-    /**
-     * This contains the ship's graphical representation.
-     */
+    public PlayerShip(Rectangle canvas) {
+        Rectangle r = new Rectangle(
+                canvas.getWidth()/2.0, 500,
+                50, 60);
+        r.setColor(Color.RED);
+        r.fill();
+        configKeyboard();
+
+        bulletsLeftToShoot = BULLETS;
+    }
 
     /**
      * Initialize the player's ship and graphical representation.
@@ -50,8 +57,9 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @param x is the ship's starting position on the horizontal axis
      * @param y is the ship's starting position on the vertical axis
      */
-    public PlayerShip(int x, int y) {
-        //public PlayerShip(int x, int y, String picPath){
+
+
+    public PlayerShip(int x, int y, Rectangle canvas) {
         Rectangle r = new Rectangle(x, y, 50, 60);
         r.setColor(Color.RED);
         r.fill();

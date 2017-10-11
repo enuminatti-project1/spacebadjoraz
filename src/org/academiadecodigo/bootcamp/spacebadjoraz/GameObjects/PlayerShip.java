@@ -19,11 +19,22 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     /**
      * This will keep the shooting the player shot until it's retrieved by Game.
-     * <p>
+     *
      * When Game gets it, it'll handle the moving of the shooting and the player
      * doesn't need it anymore.
      */
     private boolean shooting;
+
+    /**
+     * Bullets until weapon needs to cooldown
+     */
+    public static final int BULLETS = 5;
+
+
+    /**
+     * Bullets we can still shoot until the weapon stops shooting
+     */
+    private int bulletsLeftToShoot;
 
     /**
      * This contains the ship's graphical representation.
@@ -31,7 +42,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     /**
      * Initialize the player's ship and graphical representation.
-     * <p>
+     *
      * TODO: The Game knows the background's boundaries, so it could just
      * pass the background itself and then the PlayerShip knows where
      * to start too.
@@ -47,6 +58,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         super.setShip(r);
         configKeyboard();
 
+        bulletsLeftToShoot = BULLETS;
     }
 
     /**
@@ -85,6 +97,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     public void stopShooting() {
         this.shooting = false;
+        bulletsLeftToShoot = BULLETS;
     }
 
     /**
@@ -93,9 +106,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @return the shooting that was created
      */
     public Bullet getBullet() {
-        if (shooting) {
+        if (shooting && bulletsLeftToShoot > 0) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
+            bulletsLeftToShoot--;
             return new Bullet(x, y, true);
         }
         return null;

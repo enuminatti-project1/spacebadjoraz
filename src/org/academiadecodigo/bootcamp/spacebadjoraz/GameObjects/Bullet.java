@@ -3,7 +3,6 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -16,7 +15,6 @@ public class Bullet implements Movable {
      * TODO: different bullets could move at different speeds
      */
     private int speed = 20;
-
 
     /**
      * Direction the bullet travels to
@@ -54,9 +52,15 @@ public class Bullet implements Movable {
     }
 
     @Override
-    public void setLimits(int x, int y, int width, int height) {
+    public void setLimits(Position limits) {
 
     }
+
+    @Override
+    public Position getPosition() {
+        return new Position(bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
+    }
+
 
     @Override
     public void setSpeed(int speed) {

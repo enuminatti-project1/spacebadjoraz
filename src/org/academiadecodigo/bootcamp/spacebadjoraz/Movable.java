@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.Position;
+
 /**
  * Created by Someone who is not me on 09/10/17.
  */
@@ -72,12 +74,13 @@ public interface Movable {
 
     /**
      * Set the limits where the object can move
-     * @param x Starting X point
-     * @param y Starting Y point
-     * @param width Width to the limit of the Y movement
-     * @param height Height to the limit of the Y movement
+     * @param limits
      */
-    void setLimits(int x, int y, int width, int height);
+    void setLimits(Position limits);
+
+    //void setPosition(Position position);
+
+    Position getPosition();
 
     /**
      * set the speed of the movement

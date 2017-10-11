@@ -26,13 +26,6 @@ public class Game {
     private PlayerShip player;
 
     /**
-     * This contains the bullet the player shoots.
-     * For now, this can just contain a single bullet.
-     */
-    private Bullet bullet;
-
-
-    /**
      * This will contain all the bullets shot.
      */
     private LinkedList<Bullet> bullets = new LinkedList<>();
@@ -85,6 +78,9 @@ public class Game {
 
             for (Bullet b : bullets ) {
                 b.move();
+                if(b.getPosition().isInside(enemy.getPosition())){
+                    System.out.println("bum!");
+                }
             }
             getBullet();
 

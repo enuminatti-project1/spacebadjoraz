@@ -9,8 +9,6 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class EnemyShip extends Ship {
 
-    private Rectangle limits;
-
     private static final int WIDTH = 30;
     private static final int HEIGHT = 40;
 
@@ -28,6 +26,9 @@ public class EnemyShip extends Ship {
         Rectangle r = new Rectangle(x, y, 30, 40);
         r.setColor(Color.BLUE);
         r.fill();
+        super.setShip(r);
+        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
+        super.setSpeed(5);
     }
 
     /**
@@ -50,5 +51,15 @@ public class EnemyShip extends Ship {
      * The enemy can't move for now.
      * TODO: make the enemy move
      */
+
+    @Override
+    public void move(){
+        int i = 0;
+        while(i < 100) {
+            System.out.println("mooving");
+            getShip().translate(-1, 0);
+            i++;
+        }
+    }
 
 }

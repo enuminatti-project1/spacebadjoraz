@@ -45,7 +45,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         r.setColor(Color.RED);
         r.fill();
         super.setShip(r);
-        super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
+        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(8);
         configKeyboard();
 

@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
-import org.academiadecodigo.bootcamp.spacebadjoraz.Utils.Calculations;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -20,7 +19,13 @@ public class EnemyShip extends Ship {
                 HEIGHT);
         r.setColor(Color.BLUE);
         r.fill();
+        super.setShip(r);
+        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
+        super.setSpeed(5);
+        currentDirection = EnemyDirection.RIGHT;
     }
+
+    private EnemyDirection currentDirection;
 
     public EnemyShip(int x, int y, Rectangle canvas) {
         Rectangle r = new Rectangle(x, y, 30, 40);
@@ -29,6 +34,7 @@ public class EnemyShip extends Ship {
         super.setShip(r);
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(5);
+        currentDirection = EnemyDirection.RIGHT;
     }
 
     /**
@@ -52,14 +58,29 @@ public class EnemyShip extends Ship {
      * TODO: make the enemy move
      */
 
+    private enum EnemyDirection {LEFT, RIGHT};
+
     @Override
-    public void move(){
-        int i = 0;
-        while(i < 100) {
-            System.out.println("mooving");
-            getShip().translate(-1, 0);
-            i++;
+    public void move() {
+        if (getShip().getX() - getSpeed() < getLimits().getX()) {
+            currentDirection = EnemyDirection.RIGHT;
+            System.out.println("moving right");
+
+        } else if (getShip().getX() + getShip().getWidth() + getSpeed()
+                > getLimits().getX() + getLimits().getHeight()) {
+            currentDirection = EnemyDirection.LEFT;
+            System.out.println("moving left");
         }
+
+        switch (currentDirection) {
+            case RIGHT:
+                getShip().translate(getSpeed(), 0);
+                break;
+            case LEFT:
+                getShip().translate(-getSpeed(), 0);
+                break;
+        }
+
     }
 
 }

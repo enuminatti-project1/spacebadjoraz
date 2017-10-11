@@ -16,7 +16,7 @@ public class EnemyShip extends Ship {
 
     public EnemyShip(Rectangle canvas) {
         Rectangle r = new Rectangle(
-                Calculations.calcMid(canvas.getX(), WIDTH),
+                (canvas.getX() + canvas.getWidth()/2),
                 30,
                 WIDTH,
                 HEIGHT);

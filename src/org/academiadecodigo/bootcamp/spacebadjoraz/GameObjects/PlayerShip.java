@@ -24,7 +24,6 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * doesn't need it anymore.
      */
     private boolean shooting;
-    private boolean shootRelease;
 
     /**
      * This contains the ship's graphical representation.
@@ -82,7 +81,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     public void shoot() {
         this.shooting = true;
-        this.shootRelease = false;
+    }
+
+    public void stopShooting() {
+        this.shooting = false;
     }
 
     /**
@@ -92,9 +94,6 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     public Bullet getBullet() {
         if (shooting) {
-            if (shootRelease == true) {
-                shooting = false;
-            }
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
             return new Bullet(x, y, true);
@@ -160,7 +159,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
                 Direction.DOWN.setEnabled(false);
                 break;
             case KeyboardEvent.KEY_SPACE:
-                shootRelease = true;
+                stopShooting();
                 break;
 
 

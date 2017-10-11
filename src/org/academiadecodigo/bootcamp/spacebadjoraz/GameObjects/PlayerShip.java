@@ -15,6 +15,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     private Keyboard key;
     private Picture pic;    //Picture of the Ship
+    private Rectangle limits;
 
 
     /**
@@ -42,6 +43,9 @@ public class PlayerShip extends Ship implements KeyboardHandler {
                 50, 60);
         r.setColor(Color.RED);
         r.fill();
+        super.setShip(r);
+        super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
+        super.setSpeed(8);
         configKeyboard();
 
         bulletsLeftToShoot = BULLETS;
@@ -64,6 +68,8 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         r.setColor(Color.RED);
         r.fill();
         super.setShip(r);
+        super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
+        super.setSpeed(8);
         configKeyboard();
 
         bulletsLeftToShoot = BULLETS;

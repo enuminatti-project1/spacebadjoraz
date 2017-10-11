@@ -9,6 +9,8 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class EnemyShip extends Ship {
 
+    private Rectangle limits;
+
     private static final int WIDTH = 30;
     private static final int HEIGHT = 40;
 

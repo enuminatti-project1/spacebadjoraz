@@ -66,6 +66,8 @@ public abstract class Ship implements Movable, Shootable {
     }
 
     private Rectangle ship;
+    private int x, y, width, height;
+    private int speed;
 
     /**
      *
@@ -83,11 +85,26 @@ public abstract class Ship implements Movable, Shootable {
         return ship;
     }
 
+    @Override
+    public void setLimits(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     /**
      * Moves the Ship on the direction set by Direction ENUM values
      */
     public void move() {
 
+        if (ship == null) {
+            return;
+        }
         for (PlayerShip.Direction dir : PlayerShip.Direction.values()){
             if (dir.isEnabled()){
                 getShip().translate(dir.getX(), dir.getY());

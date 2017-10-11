@@ -43,7 +43,9 @@ public class EnemyShip extends Ship {
      * TODO: make the enemy move
      */
 
-    private enum EnemyDirection {LEFT, RIGHT};
+    private enum EnemyDirection {
+        LEFT, RIGHT
+    }
 
     @Override
     public void move() {
@@ -51,8 +53,7 @@ public class EnemyShip extends Ship {
             currentDirection = EnemyDirection.RIGHT;
             System.out.println("moving right");
 
-        } else if (getShip().getX() + getShip().getWidth() + getSpeed()
-                > getLimits().getX() + getLimits().getHeight()) {
+        } else if (getShip().getX() > getLimits().getWidth() - 25 ){
             currentDirection = EnemyDirection.LEFT;
             System.out.println("moving left");
         }

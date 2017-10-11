@@ -4,6 +4,7 @@ import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 
 import java.util.LinkedList;
 
@@ -86,12 +87,17 @@ public class Game {
                     System.out.println("bum!");
                     enemy = null;
                     break;
+
                 }
             }
             getBullet();
 
             Thread.sleep(33);
         }
+        Text t = new Text (400,300, "YOU WIN!");
+        t.grow(50,50);
+        t.setColor(Color.GREEN);
+        t.draw();
         System.out.println("we win");
     }
 

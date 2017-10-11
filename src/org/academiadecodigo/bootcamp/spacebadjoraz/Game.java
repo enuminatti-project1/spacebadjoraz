@@ -1,10 +1,8 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
-import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.Bullet;
-import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.EnemyShip;
-import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.PlayerShip;
-import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.ShipFactory;
+import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 import java.util.LinkedList;
@@ -82,7 +80,12 @@ public class Game {
             for (Bullet b : bullets ) {
                 b.move();
                 if(b.getPosition().isInside(enemy.getPosition())){
+                    Position x = enemy.getPosition();
                     enemy.getShip().delete();
+                    b.getBullet().delete();
+                    Ellipse e = new Ellipse(enemy.getPosition().getX(), enemy.getPosition().getY(), 50,50);
+                    e.setColor(Color.ORANGE);
+                    e.fill();
                     System.out.println("bum!");
                     enemy = null;
                     break;

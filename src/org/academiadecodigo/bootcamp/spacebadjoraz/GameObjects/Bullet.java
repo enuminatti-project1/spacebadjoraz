@@ -67,4 +67,9 @@ public class Bullet implements Movable {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public Ellipse getBullet() {
+        return bullet;
+
+    }
 }

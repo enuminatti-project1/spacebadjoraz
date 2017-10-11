@@ -8,7 +8,9 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class EnemyShip extends Ship {
 
-    public EnemyShip(int x, int y) {
+    private Rectangle limits;
+
+    public EnemyShip(int x, int y, Rectangle canvas) {
         Rectangle r = new Rectangle(x, y, 30, 40);
         r.setColor(Color.BLUE);
         r.fill();
@@ -25,12 +27,14 @@ public class EnemyShip extends Ship {
 
     }
 
+    @Override
+    public void stopShooting() {
+
+    }
+
     /**
      * The enemy can't move for now.
      * TODO: make the enemy move
      */
-    @Override
-    public void move() {
 
-    }
 }

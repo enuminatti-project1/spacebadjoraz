@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -50,5 +51,15 @@ public class Bullet implements Movable {
             //bullet goes up
         }
         //bullet goes down
+    }
+
+    @Override
+    public void setLimits(int x, int y, int width, int height) {
+
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
     }
 }

@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+
 /**
  * Created by Someone who is not me on 09/10/17.
  */
@@ -10,9 +12,9 @@ public class ShipFactory {
      *
      * @return created enemy
      */
-    public static EnemyShip createEnemy(){
+    public static EnemyShip createEnemy(Rectangle canvas){
 
-        return new EnemyShip(400, 30);
+        return new EnemyShip(400, 30, canvas);
 
     }
 }

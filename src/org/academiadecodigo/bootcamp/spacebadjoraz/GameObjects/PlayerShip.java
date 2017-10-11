@@ -15,6 +15,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
 
     private Keyboard key;
     private Picture pic;    //Picture of the Ship
+    private Rectangle limits;
 
 
     /**
@@ -39,14 +40,14 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * @param x is the ship's starting position on the horizontal axis
      * @param y is the ship's starting position on the vertical axis
      */
-    public PlayerShip(int x, int y) {
-        //public PlayerShip(int x, int y, String picPath){
+    public PlayerShip(int x, int y, Rectangle canvas) {
         Rectangle r = new Rectangle(x, y, 50, 60);
         r.setColor(Color.RED);
         r.fill();
         super.setShip(r);
+        super.setLimits(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
+        super.setSpeed(8);
         configKeyboard();
-
     }
 
     /**

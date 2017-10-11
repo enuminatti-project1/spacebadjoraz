@@ -41,13 +41,14 @@ public class EnemyShip extends Ship {
      */
 
     @Override
-    public void move(){
+    public void move(){/*
         int i = 0;
         while(i < 100) {
             System.out.println("mooving");
             getShip().translate(-1, 0);
             i++;
         }
+        */
     }
 
 }

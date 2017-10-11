@@ -15,6 +15,7 @@ public class Bullet implements Movable {
      * TODO: different bullets could move at different speeds
      */
     private int speed = 20;
+    private Position limits;
 
     /**
      * Direction the bullet travels to
@@ -53,7 +54,7 @@ public class Bullet implements Movable {
 
     @Override
     public void setLimits(Position limits) {
-
+        this.limits = limits;
     }
 
     @Override
@@ -64,6 +65,6 @@ public class Bullet implements Movable {
 
     @Override
     public void setSpeed(int speed) {
-
+        this.speed = speed;
     }
 }

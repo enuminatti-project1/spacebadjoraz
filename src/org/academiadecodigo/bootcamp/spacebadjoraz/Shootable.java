@@ -7,9 +7,11 @@ public interface Shootable {
 
     /**
      * Any object that can shoot will implement this.
-     *
+     * <p>
      * This can remain unusable for now until the
      * enemies learn how to shoot too.
      */
     void shoot();
+
+    void stopShooting();
 }

@@ -12,13 +12,15 @@ public abstract class Ship implements Movable {
     private Rectangle ship;
     private Position limits;
     private int speed;
+    private int health;
 
     /**
      *
      * @param ship Rectangle with the temporary aspect of the ship
      */
-    protected void setShip(Rectangle ship) {
+    protected void setShip(Rectangle ship, int health) {
         this.ship = ship;
+        this.health = health;
     }
 
     /**

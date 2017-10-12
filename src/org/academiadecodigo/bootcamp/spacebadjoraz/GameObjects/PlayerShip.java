@@ -32,6 +32,9 @@ public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
      */
     private static final int BULLETS = 5;
 
+
+    private static final int HEALTH = 10;
+
     /**
      * Bullets we can still shoot until the weapon stops shooting
      */
@@ -48,7 +51,7 @@ public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
                 50, 60);
         r.setColor(Color.RED);
         r.fill();
-        super.setShip(r);
+        super.setShip(r, HEALTH);
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(8);
         configKeyboard();

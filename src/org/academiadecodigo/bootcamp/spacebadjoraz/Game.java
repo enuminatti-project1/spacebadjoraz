@@ -121,12 +121,27 @@ public class Game {
         }
     }
 
+    public int getLeftEdge() {
+        return background.getX();
+    }
+
     public int getRightEdge() {
         return background.getX() + background.getWidth();
     }
 
+    public int getTopEdge() {
+        return background.getY();
+    }
+
     public int getBottomEdge() {
         return background.getY() + background.getHeight();
+    }
+
+    public boolean insideGame(Position pos) {
+        return getLeftEdge() <= pos.getLeft() &&
+                getRightEdge() >= pos.getRight() &&
+                getTopEdge() <= pos.getTop() &&
+                getBottomEdge() >= pos.getBottom();
     }
 
     // TODO: Create a fortress colidable, with health

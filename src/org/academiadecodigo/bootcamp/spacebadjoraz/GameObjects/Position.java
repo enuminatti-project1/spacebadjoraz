@@ -14,10 +14,12 @@ public class Position {
     }
 
     public boolean isInside(Position pos){
-        return getLeft() < pos.getLeft() &&
-                getRight() > pos.getRight() &&
-                getTop() < pos.getTop() &&
-                getBottom() > pos.getBottom();
+
+        return (this.x < pos.getX() + pos.getWidth() &&
+                this.x + this.width > pos.getX() &&
+                this.y < pos.getY() + pos.getHeight() &&
+                this.height + this.y > pos.getY());
+
     }
 
     public int getX() {
@@ -36,19 +38,11 @@ public class Position {
         return height;
     }
 
-    public int getLeft() {
-        return x;
-    }
-
-    public int getTop() {
-        return y;
-    }
-
-    public int getRight() {
+    public int getMaxX() {
         return x + width;
     }
 
-    public int getBottom() {
+    public int getMaxY() {
         return y + height;
     }
 }

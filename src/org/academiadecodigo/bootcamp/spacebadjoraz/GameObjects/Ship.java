@@ -1,7 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
-import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
@@ -55,22 +54,6 @@ public abstract class Ship implements Movable {
         this.speed = speed;
     }
 
-    public int getLeft() {
-        return ship.getX();
-    }
-
-    public int getTop() {
-        return ship.getY();
-    }
-
-    public int getRight() {
-        return ship.getX() + ship.getWidth();
-    }
-
-    public int getBottom() {
-        return ship.getY() + ship.getHeight();
-    }
-
     /**
      * Moves the Ship on the direction set by Direction ENUM values
      */
@@ -86,29 +69,29 @@ public abstract class Ship implements Movable {
                 switch (dir){
 
                     case RIGHT:
-                        if(getRight() + speed > limits.getRight()){
-                            getShip().translate(limits.getRight() - getRight(), 0);
+                        if(getPosition().getMaxX() + speed > limits.getMaxX()){
+                            getShip().translate(limits.getMaxX() - getPosition().getMaxX(), 0);
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case LEFT:
-                        if(getLeft() - speed < limits.getLeft()){
-                            getShip().translate(limits.getLeft() - getLeft(), 0);
+                        if(getPosition().getX() - speed < limits.getX()){
+                            getShip().translate(limits.getX() - getPosition().getX(), 0);
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case UP:
-                        if(getTop() - speed < limits.getTop()){
-                            getShip().translate(0, limits.getTop() - getTop());
+                        if(getPosition().getY() - speed < limits.getY()){
+                            getShip().translate(0, limits.getY() - getPosition().getY());
                             dir.setEnabled(false);
                             continue;
                         }
                         break;
                     case DOWN:
-                        if(getBottom() + speed > limits.getBottom()){
-                            getShip().translate(0, (limits.getBottom() - getBottom()));
+                        if(getPosition().getMaxY() + speed > limits.getMaxY()){
+                            getShip().translate(0, (limits.getMaxY() - getPosition().getMaxY()));
                             dir.setEnabled(false);
                             continue;
                         }

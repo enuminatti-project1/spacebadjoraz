@@ -147,20 +147,6 @@ public class Game {
             bullets.add(newBullet);
         }
     }
-
-    /**
-     * Find out if a certain position is still within the game limits
-     *
-     * @param pos Position to check
-     * @return True if Position is still inside the game limits
-     */
-    public boolean insideGame(Position pos) {
-        return gameLimits.getLeft() <= pos.getLeft() &&
-                gameLimits.getRight() >= pos.getRight() &&
-                gameLimits.getTop() <= pos.getTop() &&
-                gameLimits.getBottom() >= pos.getBottom();
-    }
-
 }
 
 // TODO: Create a fortress colidable, with health

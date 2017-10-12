@@ -14,10 +14,17 @@ public class Position {
     }
 
     public boolean isInside(Position pos){
-        return getLeft() < pos.getLeft() &&
-                getRight() > pos.getRight() &&
-                getTop() < pos.getTop() &&
-                getBottom() > pos.getBottom();
+        return getX() < pos.getRight() &&
+                getRight() > pos.getX() &&
+                getY() < pos.getBottom() &&
+                getBottom() > pos.getY();
+    }
+
+    public boolean isUnsafe(Position pos, int speed) {
+        return getLeft() - speed < pos.getLeft() ||
+                getRight() + speed > pos.getRight() ||
+                getTop() - speed < pos.getTop() ||
+                getBottom() + speed > pos.getBottom();
     }
 
     public int getX() {

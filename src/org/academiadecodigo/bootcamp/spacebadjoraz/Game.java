@@ -56,6 +56,7 @@ public class Game {
     private Text plHealthText;
     private Text enNameText;
     private Text enHealthText;
+    private Rectangle introBackground;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -127,6 +128,48 @@ public class Game {
         setShipInfo();
         updateShipInfo(enemy);
         updateShipInfo(player);
+
+        this.introBackground = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
+        introBackground.setColor(Color.BLACK);
+        introBackground.fill();
+    }
+
+    public void gameIntro() {
+
+        Text t = new Text(300, 350, "In the beginning of times there was only God.");
+        Text t1 = new Text(300, 400, "Then wild aliens appeared,");
+        Text t2 = new Text(300, 450, "but luckily God also created a brave warrior,");
+        Text t3 = new Text(300, 500, "to defend the universe.");
+        t2.setColor(Color.GREEN);
+        t2.draw();
+        t2.grow(20, 10);
+        t.setColor(Color.GREEN);
+        t.draw();
+        t.grow(20, 10);
+        t1.setColor(Color.GREEN);
+        t1.draw();
+        t1.grow(20, 10);
+        t3.setColor(Color.GREEN);
+        t3.draw();
+        t3.grow(20, 10);
+
+        while (t3.getY() > -30) {
+            t.translate(0, -1);
+            t1.translate(0, -1);
+            t2.translate(0, -1);
+            t3.translate(0, -1);
+
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        introBackground.delete();
+        t.delete();
+        t1.delete();
+        t2.delete();
+        t3.delete();
     }
 
 
@@ -135,6 +178,7 @@ public class Game {
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
+        gameIntro();
         while (enemy != null && player != null) {
             enemy.move();
             player.move();

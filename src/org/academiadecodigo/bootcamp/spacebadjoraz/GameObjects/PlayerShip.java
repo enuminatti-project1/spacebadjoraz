@@ -106,20 +106,23 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      * Create a new shooting shot by the player.
      * Since it's the player's it'll shoot up.
      */
+    @Override
     public void shoot() {
         this.shooting = true;
     }
 
+    @Override
     public void stopShooting() {
         this.shooting = false;
         bulletsLeftToShoot = BULLETS;
     }
 
     /**
-     * This sends to Game the created shooting.
+     * This sends to Game the created bullet.
      *
-     * @return the shooting that was created
+     * @return the Bullet that was created
      */
+    @Override
     public Bullet getBullet() {
         if (shooting && bulletsLeftToShoot > 0) {
             int x = (getShip().getWidth() / 2) + getShip().getX();

@@ -155,10 +155,10 @@ public class Game {
      * @return True if Position is still inside the game limits
      */
     public boolean insideGame(Position pos) {
-        return gameLimits.getLeft() <= pos.getLeft() &&
-                gameLimits.getRight() >= pos.getRight() &&
-                gameLimits.getTop() <= pos.getTop() &&
-                gameLimits.getBottom() >= pos.getBottom();
+        return gameLimits.getX() <= pos.getX() &&
+                gameLimits.getMaxX() >= pos.getMaxX() &&
+                gameLimits.getY() <= pos.getY() &&
+                gameLimits.getMaxY() >= pos.getMaxY();
     }
 
 }

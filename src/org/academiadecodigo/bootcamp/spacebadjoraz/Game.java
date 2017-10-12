@@ -34,6 +34,8 @@ public class Game {
      */
     private Rectangle background;
 
+    private Position gameLimits;
+
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int PADDING = 10;
@@ -61,6 +63,9 @@ public class Game {
         background.setColor(Color.BLACK);
         background.fill();
 
+        gameLimits = new Position(background.getX(), background.getY(),
+                background.getWidth(), background.getHeight());
+
         this.enemy = ShipFactory.createEnemy(background);
         this.player = new PlayerShip(background);
     }
@@ -75,13 +80,13 @@ public class Game {
             enemy.move();
             player.move();
 
-            for (Bullet b : bullets ) {
+            for (Bullet b : bullets) {
                 b.move();
-                if(b.getPosition().isInside(enemy.getPosition())){
+                if (b.getPosition().isInside(enemy.getPosition())) {
                     Position x = enemy.getPosition();
                     enemy.getShip().delete();
                     b.getBullet().delete();
-                    Ellipse e = new Ellipse(enemy.getPosition().getX(), enemy.getPosition().getY(), 50,50);
+                    Ellipse e = new Ellipse(enemy.getPosition().getX(), enemy.getPosition().getY(), 50, 50);
                     e.setColor(Color.ORANGE);
                     e.fill();
                     System.out.println("bum!");
@@ -94,8 +99,8 @@ public class Game {
 
             Thread.sleep(33);
         }
-        Text t = new Text (400,300, "YOU WIN!");
-        t.grow(50,50);
+        Text t = new Text(400, 300, "YOU WIN!");
+        t.grow(50, 50);
         t.setColor(Color.GREEN);
         t.draw();
         System.out.println("we win");
@@ -104,7 +109,7 @@ public class Game {
                     t.getHeight() > background.getHeight()) {
                 break;
             }
-            t.grow(10,10);
+            t.grow(10, 10);
             Thread.sleep(33);
         }
         System.exit(0);
@@ -116,19 +121,24 @@ public class Game {
      */
     public void getBullet() {
         Bullet newBullet = player.getBullet();
-        if(newBullet != null) {
+        if (newBullet != null) {
             bullets.add(newBullet);
         }
     }
 
-    public int getRightEdge() {
-        return background.getX() + background.getWidth();
+    /**
+     * Find out if a certain position is still within the game limits
+     *
+     * @param pos Position to check
+     * @return True if Position is still inside the game limits
+     */
+    public boolean insideGame(Position pos) {
+        return gameLimits.getLeft() <= pos.getLeft() &&
+                gameLimits.getRight() >= pos.getRight() &&
+                gameLimits.getTop() <= pos.getTop() &&
+                gameLimits.getBottom() >= pos.getBottom();
     }
-
-    public int getBottomEdge() {
-        return background.getY() + background.getHeight();
-    }
-
-    // TODO: Create a fortress colidable, with health
 
 }
+
+// TODO: Create a fortress colidable, with health

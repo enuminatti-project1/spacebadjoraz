@@ -10,8 +10,10 @@ public class EnemyShip extends Ship {
 
     private static final int SHIPWIDTH = 30;
     private static final int SHIPHEIGHT = 40;
+    private static final int RANDPATH = 50;
 
     private EnemyDirection currentDirection;
+    private int remainPath;
 
     private enum EnemyDirection {
         LEFT,
@@ -45,6 +47,7 @@ public class EnemyShip extends Ship {
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(5);
         currentDirection = EnemyDirection.RIGHT;
+        remainPath = RANDPATH;
     }
 
     /**
@@ -68,10 +71,19 @@ public class EnemyShip extends Ship {
 
     @Override
     public void move() {
+        remainPath--;
+
         // what to do if we reach the limits
-        if (getPosition().isUnsafe(getLimits(), getSpeed())) {
-            currentDirection = currentDirection.getOpposite();
-            System.out.println("Moving " + currentDirection);
+        if (getPosition().isInside(getLimits(), getSpeed())) {
+            remainPath = RANDPATH;
+            this.currentDirection = this.currentDirection.getOpposite();
+            System.out.println("Switching to " + currentDirection);
+        }
+
+        if (remainPath == 0) {
+            remainPath = (int) (Math.random() * RANDPATH);
+            this.currentDirection = this.currentDirection.getOpposite();
+            System.out.println("Switching to " + currentDirection);
         }
 
         switch (this.currentDirection) {

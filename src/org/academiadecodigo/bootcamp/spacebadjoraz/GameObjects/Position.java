@@ -13,6 +13,11 @@ public class Position {
         this.height = height;
     }
 
+    /**
+     * check if the caller is inside the Position pos
+     * @param pos position to check if is inside
+     * @return true if is inside and false if not
+     */
     public boolean isInside(Position pos){
         return getX() < pos.getMaxX() &&
                 getMaxX() > pos.getX() &&
@@ -20,11 +25,16 @@ public class Position {
                 getMaxY() > pos.getY();
     }
 
-    public boolean isUnsafe(Position pos, int speed) {
-        return getX() - speed < pos.getX() ||
-                getMaxX() + speed > pos.getMaxX() ||
-                getY() - speed < pos.getY() ||
-                getMaxY() + speed > pos.getMaxY();
+    /**
+     * Check if the caller is inside the Position position after he
+     * translates with the speed
+     * @param position position to check if is inside
+     * @param speed speed to add to the position
+     * @return true or false if the caller is inside the position
+     */
+    public boolean isInside(Position position, int speed){
+        return (this.x - position.getX() < speed
+                || position.getMaxX() - this.getMaxX() < speed);
     }
 
     public int getX() {

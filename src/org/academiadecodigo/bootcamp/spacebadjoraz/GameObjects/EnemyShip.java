@@ -35,7 +35,7 @@ public class EnemyShip extends Ship {
         }
     }
 
-    public EnemyShip(Rectangle canvas) {
+    public EnemyShip(Rectangle canvas, int health) {
         Rectangle r = new Rectangle(
                 (canvas.getX() + canvas.getWidth()/2),
                 30,
@@ -43,7 +43,7 @@ public class EnemyShip extends Ship {
                 SHIPHEIGHT);
         r.setColor(Color.BLACK);
         r.fill();
-        super.setShip(r);
+        super.setShip(r, health);
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(5);
         currentDirection = EnemyDirection.RIGHT;

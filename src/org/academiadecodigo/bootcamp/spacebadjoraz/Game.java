@@ -105,7 +105,7 @@ public class Game {
             for (Bullet b : bullets) {
                 b.move();
                 if (b.getPosition().isInside(enemy.getPosition())) {
-                     Position x = enemy.getPosition();
+                    Position x = enemy.getPosition();
                     enemy.getShip().delete();
                     b.getBullet().delete();
                     Ellipse e = new Ellipse(enemy.getPosition().getX(), enemy.getPosition().getY(), 50, 50);

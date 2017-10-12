@@ -14,7 +14,7 @@ public class ShipFactory {
      */
     public static EnemyShip createEnemy(Rectangle gameArea){
 
-        return new EnemyShip(gameArea);
+        return new EnemyShip(gameArea, 20);
 
     }
 }

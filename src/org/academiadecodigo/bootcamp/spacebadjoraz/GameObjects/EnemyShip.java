@@ -8,27 +8,37 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class EnemyShip extends Ship {
 
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 40;
+    private static final int SHIPWIDTH = 30;
+    private static final int SHIPHEIGHT = 40;
+
+    private EnemyDirection currentDirection;
+
+    private enum EnemyDirection {
+        LEFT,
+        RIGHT;
+
+        public EnemyDirection getOpposite() {
+            EnemyDirection current = null;
+
+            switch (this) {
+                case LEFT:
+                    current = RIGHT;
+                    break;
+                case RIGHT:
+                    current = LEFT;
+                    break;
+            }
+
+            return current;
+        }
+    }
 
     public EnemyShip(Rectangle canvas) {
         Rectangle r = new Rectangle(
                 (canvas.getX() + canvas.getWidth()/2),
                 30,
-                WIDTH,
-                HEIGHT);
-        r.setColor(Color.BLUE);
-        r.fill();
-        super.setShip(r);
-        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
-        super.setSpeed(5);
-        currentDirection = EnemyDirection.RIGHT;
-    }
-
-    private EnemyDirection currentDirection;
-
-    public EnemyShip(int x, int y, Rectangle canvas) {
-        Rectangle r = new Rectangle(x, y, 30, 40);
+                SHIPWIDTH,
+                SHIPHEIGHT);
         r.setColor(Color.BLUE);
         r.fill();
         super.setShip(r);
@@ -41,14 +51,12 @@ public class EnemyShip extends Ship {
      * The enemy can't shoot for now.
      * TODO: make the enemy shoot after mvp
      */
-    @Override
     public void shoot() {
 
         // Bullet bullet = new Bullet(false);
 
     }
 
-    @Override
     public void stopShooting() {
 
     }
@@ -58,22 +66,15 @@ public class EnemyShip extends Ship {
      * TODO: make the enemy move
      */
 
-    private enum EnemyDirection {
-        LEFT, RIGHT
-    }
-
     @Override
     public void move() {
-        if (getShip().getX() - getSpeed() < getLimits().getX()) {
-            currentDirection = EnemyDirection.RIGHT;
-            System.out.println("moving right");
-
-        } else if (getShip().getX() > getLimits().getWidth() - 25 ){
-            currentDirection = EnemyDirection.LEFT;
-            System.out.println("moving left");
+        // what to do if we reach the limits
+        if (!getLimits().isInside(getPosition())) {
+            this.currentDirection = this.currentDirection.getOpposite();
+            System.out.println("moving " + this.currentDirection);
         }
 
-        switch (currentDirection) {
+        switch (this.currentDirection) {
             case RIGHT:
                 getShip().translate(getSpeed(), 0);
                 break;

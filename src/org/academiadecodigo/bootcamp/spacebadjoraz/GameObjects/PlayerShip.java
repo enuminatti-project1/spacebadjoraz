@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -12,11 +13,10 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 /**
  * Created by Someone who is not me on 09/10/17.
  */
-public class PlayerShip extends Ship implements KeyboardHandler {
+public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
 
     private Keyboard key;
     private Picture pic;    //Picture of the Ship
-    private Rectangle limits;
 
 
     /**
@@ -30,14 +30,18 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     /**
      * Bullets until weapon needs to cooldown
      */
-    public static final int BULLETS = 5;
-
+    private static final int BULLETS = 5;
 
     /**
      * Bullets we can still shoot until the weapon stops shooting
      */
     private int bulletsLeftToShoot;
 
+    /**
+     * Initialize the player's ship and graphical representation.
+     *
+     * @param canvas is the Game's Rectangle so the ship knows the game limits and placement
+     */
     public PlayerShip(Rectangle canvas) {
         Rectangle r = new Rectangle(
                 canvas.getWidth()/2.0, 500,
@@ -49,43 +53,29 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         super.setSpeed(8);
         configKeyboard();
 
-        bulletsLeftToShoot = BULLETS;
+        this.bulletsLeftToShoot = BULLETS;
     }
 
     /**
-     * Initialize the player's ship and graphical representation.
-     *
-     * TODO: The Game knows the background's boundaries, so it could just
-     * pass the background itself and then the PlayerShip knows where
-     * to start too.
-     *
-     * @param x is the ship's starting position on the horizontal axis
-     * @param y is the ship's starting position on the vertical axis
-     */
-
-
-    public PlayerShip(int x, int y, Rectangle canvas) {
-        Rectangle r = new Rectangle(x, y, 50, 60);
-        r.setColor(Color.RED);
-        r.fill();
-        super.setShip(r);
-        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
-        super.setSpeed(8);
-        configKeyboard();
-
-        bulletsLeftToShoot = BULLETS;
-    }
-
-    /**
-     * Set the Keyboard keys do handle
+     * Set the Keyboard keys to handle
      */
     public void configKeyboard() {
 
         this.key = new Keyboard(this);
 
-        int[] kArray = {KeyboardEvent.KEY_D, KeyboardEvent.KEY_A, KeyboardEvent.KEY_S,
-                KeyboardEvent.KEY_W, KeyboardEvent.KEY_DOWN, KeyboardEvent.KEY_UP,
-                KeyboardEvent.KEY_LEFT, KeyboardEvent.KEY_RIGHT, KeyboardEvent.KEY_SPACE};
+        int[] kArray = {
+                KeyboardEvent.KEY_W,
+                KeyboardEvent.KEY_A,
+                KeyboardEvent.KEY_S,
+                KeyboardEvent.KEY_D,
+
+                KeyboardEvent.KEY_UP,
+                KeyboardEvent.KEY_LEFT,
+                KeyboardEvent.KEY_DOWN,
+                KeyboardEvent.KEY_RIGHT,
+
+                KeyboardEvent.KEY_SPACE
+        };
 
         for (int i : kArray) {
 
@@ -103,18 +93,20 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     }
 
     /**
-     * Create a new shooting shot by the player.
-     * Since it's the player's it'll shoot up.
+     * Start shooting.
      */
     @Override
     public void shoot() {
         this.shooting = true;
     }
 
+    /**
+     * Stop shooting.
+     */
     @Override
     public void stopShooting() {
         this.shooting = false;
-        bulletsLeftToShoot = BULLETS;
+        this.bulletsLeftToShoot = BULLETS;
     }
 
     /**
@@ -124,10 +116,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     @Override
     public Bullet getBullet() {
-        if (shooting && bulletsLeftToShoot > 0) {
+        if (this.shooting && this.bulletsLeftToShoot > 0) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
-            bulletsLeftToShoot--;
+            this.bulletsLeftToShoot--;
             return new Bullet(x, y, true);
         }
         return null;

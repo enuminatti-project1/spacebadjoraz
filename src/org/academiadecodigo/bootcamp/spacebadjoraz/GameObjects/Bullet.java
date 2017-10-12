@@ -11,15 +11,15 @@ public class Bullet implements Movable {
 
     /**
      * Speed the bullet travels at.
-     * <p>
+     *
      * TODO: different bullets could move at different speeds
      */
-    private int speed = 20;
+    private int speed;
     private Position limits;
 
     /**
-     * Direction the bullet travels to
-     * <p>
+     * Direction the bullet travels to.
+     *
      * TODO: bullets can move diagonally
      */
     private boolean shootUp;
@@ -35,9 +35,11 @@ public class Bullet implements Movable {
      */
     public Bullet(int x, int y, boolean shootUp) {
         this.shootUp = shootUp;
-        bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
-        bullet.setColor(Color.YELLOW);
-        bullet.fill();
+        this.bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
+        this.bullet.setColor(Color.YELLOW);
+        this.bullet.fill();
+
+        this.speed = 20;
     }
 
     /**
@@ -46,29 +48,37 @@ public class Bullet implements Movable {
     @Override
     public void move() {
         if (shootUp) {
-            bullet.translate(0, -speed);
             //bullet goes up
+            bullet.translate(0, -speed);
+        } else {
+            //bullet goes down
+            bullet.translate(0, speed);
         }
-        //bullet goes down
     }
 
     @Override
     public void setLimits(Position limits) {
+
         this.limits = limits;
+
     }
 
     @Override
     public Position getPosition() {
-        return new Position(bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
-    }
 
+        return new Position(bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
+
+    }
 
     @Override
     public void setSpeed(int speed) {
+
         this.speed = speed;
+
     }
 
     public Ellipse getBullet() {
+
         return bullet;
 
     }

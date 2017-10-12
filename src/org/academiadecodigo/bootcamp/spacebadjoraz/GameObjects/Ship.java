@@ -7,7 +7,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 /**
  * Created by Someone who is not me on 09/10/17.
  */
-public abstract class Ship implements Movable, Shootable {
+public abstract class Ship implements Movable {
     // TODO: add common behavior between PlayerShip and EnemyShips
 
     private Rectangle ship;

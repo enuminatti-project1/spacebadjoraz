@@ -32,13 +32,22 @@ public class Game {
     /**
      * The background for the game
      */
+    private Rectangle canvas;
     private Rectangle background;
-
+    private Rectangle playerInfo;
+    private Rectangle enemyinfo;
     private Position gameLimits;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int PADDING = 10;
+
+    public static final int PL_WIDTH = 150;
+    public static final int PL_HEIGHT = 600;
+
+    public static final int EN_WIDTH = 150;
+    public static final int EN_HEIGHT = 600;
+
 
     /**
      * Entry door to the game :'D
@@ -59,9 +68,22 @@ public class Game {
      * Initialize game objects and background
      */
     public void init() {
-        background = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
-        background.setColor(Color.BLACK);
+
+        canvas = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
+        canvas.draw();
+
+        background = new Rectangle(PADDING + PL_WIDTH, PADDING, WIDTH - PL_WIDTH - EN_WIDTH, HEIGHT);
+        background.setColor(Color.BLUE);
         background.fill();
+
+        playerInfo = new Rectangle(PADDING, PADDING, PL_WIDTH, PL_HEIGHT);
+        playerInfo.setColor(Color.BLACK);
+        playerInfo.fill();
+
+        enemyinfo = new Rectangle((canvas.getX()+canvas.getWidth()) - EN_WIDTH, PADDING, EN_WIDTH, EN_HEIGHT);
+        enemyinfo.setColor(Color.BLACK);
+        enemyinfo.fill();
+
 
         gameLimits = new Position(background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());

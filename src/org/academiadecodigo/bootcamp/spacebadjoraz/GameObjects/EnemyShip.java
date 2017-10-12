@@ -39,7 +39,7 @@ public class EnemyShip extends Ship {
                 30,
                 SHIPWIDTH,
                 SHIPHEIGHT);
-        r.setColor(Color.BLUE);
+        r.setColor(Color.BLACK);
         r.fill();
         super.setShip(r);
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));

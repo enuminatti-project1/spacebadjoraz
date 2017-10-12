@@ -12,9 +12,9 @@ public class ShipFactory {
      *
      * @return created enemy
      */
-    public static EnemyShip createEnemy(Rectangle canvas){
+    public static EnemyShip createEnemy(Rectangle gameArea){
 
-        return new EnemyShip(canvas);
+        return new EnemyShip(gameArea);
 
     }
 }

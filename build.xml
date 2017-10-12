@@ -32,7 +32,7 @@
     </target>
 
     <!-- Creates a JAR file -->
-    <target name="jarfile" description="Archives the code" depends="compile">
+    <target name="jarfile" description="Archives the code" depends="clean,compile">
         <jar destfile="${build.dir}/${project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}" />

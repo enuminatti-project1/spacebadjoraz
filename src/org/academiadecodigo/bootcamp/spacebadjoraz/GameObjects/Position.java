@@ -14,17 +14,17 @@ public class Position {
     }
 
     public boolean isInside(Position pos){
-        return getX() < pos.getRight() &&
-                getRight() > pos.getX() &&
-                getY() < pos.getBottom() &&
-                getBottom() > pos.getY();
+        return getX() < pos.getMaxX() &&
+                getMaxX() > pos.getX() &&
+                getY() < pos.getMaxY() &&
+                getMaxY() > pos.getY();
     }
 
     public boolean isUnsafe(Position pos, int speed) {
-        return getLeft() - speed < pos.getLeft() ||
-                getRight() + speed > pos.getRight() ||
-                getTop() - speed < pos.getTop() ||
-                getBottom() + speed > pos.getBottom();
+        return getX() - speed < pos.getX() ||
+                getMaxX() + speed > pos.getMaxX() ||
+                getY() - speed < pos.getY() ||
+                getMaxY() + speed > pos.getMaxY();
     }
 
     public int getX() {
@@ -43,19 +43,11 @@ public class Position {
         return height;
     }
 
-    public int getLeft() {
-        return x;
-    }
-
-    public int getTop() {
-        return y;
-    }
-
-    public int getRight() {
+    public int getMaxX() {
         return x + width;
     }
 
-    public int getBottom() {
+    public int getMaxY() {
         return y + height;
     }
 }

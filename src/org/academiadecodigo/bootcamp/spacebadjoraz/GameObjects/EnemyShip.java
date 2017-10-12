@@ -35,7 +35,7 @@ public class EnemyShip extends Ship {
 
     public EnemyShip(Rectangle canvas) {
         Rectangle r = new Rectangle(
-                (canvas.getX() + canvas.getWidth()/2),
+                (canvas.getX() + canvas.getWidth() / 2),
                 30,
                 SHIPWIDTH,
                 SHIPHEIGHT);
@@ -69,9 +69,9 @@ public class EnemyShip extends Ship {
     @Override
     public void move() {
         // what to do if we reach the limits
-        if (!getLimits().isInside(getPosition())) {
-            this.currentDirection = this.currentDirection.getOpposite();
-            System.out.println("moving " + this.currentDirection);
+        if (getPosition().isUnsafe(getLimits(), getSpeed())) {
+            currentDirection = currentDirection.getOpposite();
+            System.out.println("Moving " + currentDirection);
         }
 
         switch (this.currentDirection) {
@@ -82,7 +82,5 @@ public class EnemyShip extends Ship {
                 getShip().translate(-getSpeed(), 0);
                 break;
         }
-
     }
-
 }

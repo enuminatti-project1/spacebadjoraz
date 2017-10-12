@@ -80,7 +80,7 @@ public class Game {
         playerInfo.setColor(Color.BLACK);
         playerInfo.fill();
 
-        enemyinfo = new Rectangle((canvas.getX()+canvas.getWidth()) - EN_WIDTH, PADDING, EN_WIDTH, EN_HEIGHT);
+        enemyinfo = new Rectangle((canvas.getX() + canvas.getWidth()) - EN_WIDTH, PADDING, EN_WIDTH, EN_HEIGHT);
         enemyinfo.setColor(Color.BLACK);
         enemyinfo.fill();
 
@@ -116,6 +116,9 @@ public class Game {
                     break;
 
                 }
+                if (!b.getPosition().isInside(gameLimits)) {
+                    b.getBullet().delete();
+                }
             }
             getBullet();
 
@@ -143,9 +146,21 @@ public class Game {
      */
     public void getBullet() {
         Bullet newBullet = player.getBullet();
-        if (newBullet != null) {
-            bullets.add(newBullet);
+        Bullet enemyBullet = new Bullet(0, 0, true);
+        if (enemy != null) {
+            enemyBullet = enemy.getBullet();
         }
+
+        if (newBullet != null) {
+            newBullet.setLimits(gameLimits);
+            bullets.add(newBullet);
+
+        }
+        if (enemyBullet != null && enemy != null) {
+            enemyBullet.setLimits(gameLimits);
+            bullets.add(enemyBullet);
+        }
+
     }
 
     /**

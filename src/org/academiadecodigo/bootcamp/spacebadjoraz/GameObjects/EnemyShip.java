@@ -64,10 +64,15 @@ public class EnemyShip extends Ship {
 
     }
 
-    /**
-     * The enemy can't move for now.
-     * TODO: make the enemy move
-     */
+    public Bullet getBullet() {
+        if (remainPath < 3) {
+            int x = (getShip().getWidth() / 2) + getShip().getX();
+            int y = getShip().getY() + getShip().getHeight() + 2;
+            return new Bullet(x, y, false);
+        }
+        return null;
+    }
+
 
     @Override
     public void move() {

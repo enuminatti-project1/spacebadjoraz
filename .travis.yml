@@ -6,3 +6,10 @@ jdk:
 
 script:
     - ant
+
+notifications:
+        email:
+                recipients:
+                        - wiiaboo@gmail.com
+                on_success: change
+                on_failure: always

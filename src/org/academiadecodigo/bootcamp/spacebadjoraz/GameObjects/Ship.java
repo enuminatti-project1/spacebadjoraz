@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -15,7 +16,6 @@ public abstract class Ship implements Movable, Shootable {
     private Rectangle ship;
     private Position limits;
     private Picture pic;
-    private String picPath;
     private int speed;
     private int health;
     private int maxHealth;
@@ -24,22 +24,19 @@ public abstract class Ship implements Movable, Shootable {
     private Text textHealth;
 
     public Ship(Rectangle ship, Position gameLimits,
-                int speed, int health, ShipType type) {
+                int speed, int health, ShipType type,
+                String name, String picPath) {
         this.ship = ship;
         this.limits = gameLimits;
         this.speed = speed;
         this.maxHealth = health;
         this.health = health;
-        this.ship.setColor(type.getColor());
-        this.ship.fill();
-        setPic(ship.getX(), ship.getY());
-    }
-
-    protected void setShip(String name, String picPath) {
         this.name = name;
         this.textName = new Text(0,0,name);
-        this.textHealth = new Text(0,0,String.valueOf(getPercentageHealth()));
-        this.picPath = picPath;
+        this.textHealth = new Text(0,0, String.valueOf(getPercentageHealth()));
+//        this.ship.setColor(type.getColor());
+//        this.ship.fill();
+        setPic(ship.getX(), ship.getY(), picPath);
     }
 
     /**
@@ -50,16 +47,12 @@ public abstract class Ship implements Movable, Shootable {
         return ship;
     }
 
-    public String getPicPath() {
-        return picPath;
-    }
-
     public Picture getPic() {
         return pic;
     }
 
-    public void setPic(int x ,int y) {
-        this.pic = new Picture(x, y, this.picPath);
+    public void setPic(int x ,int y, String picPath) {
+        this.pic = new Picture(x, y, picPath);
         pic.draw();
     }
 

@@ -10,8 +10,8 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
  */
 public class EnemyShip extends Ship {
 
-    private static final int SHIPWIDTH = 30;
-    private static final int SHIPHEIGHT = 40;
+    private static final int SHIPWIDTH = 50;
+    private static final int SHIPHEIGHT = 68;
     private static final int RANDPATH = 50;
     private static final int SPEED = 5;
 
@@ -41,8 +41,8 @@ public class EnemyShip extends Ship {
     public EnemyShip(Position gameLimits, int health, String name, String picPath) {
 
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), SHIPWIDTH),
-                30, SHIPWIDTH, SHIPHEIGHT), gameLimits, SPEED, health, ShipType.ENEMY);
-        super.setShip(name, picPath);
+                30, SHIPWIDTH, SHIPHEIGHT), gameLimits, SPEED, health, ShipType.ENEMY,
+                name, picPath);
         currentDirection = EnemyDirection.RIGHT;
         remainPath = RANDPATH;
     }

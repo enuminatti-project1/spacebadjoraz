@@ -143,8 +143,7 @@ public class Game {
                         updateShipInfo(s);
                     }
                 }
-
-                if (!insideGame(b.getPosition())) {
+                if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
                     b.getBullet().delete();
                     bulletIterator.remove();
                 }

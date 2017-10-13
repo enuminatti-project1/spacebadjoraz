@@ -108,9 +108,9 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     public PlayerShip(Position gameLimits) {
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), 50),
-                        500, 50, 60),
-                gameLimits, SPEED, HEALTH, ShipType.PLAYER);
-        super.setShip("Enuminatti", "img/plLogo.png");
+                        500, 50, 50),
+                gameLimits, SPEED, HEALTH, ShipType.PLAYER,
+                "Enuminatti", "img/plLogo.png");
         configKeyboard();
 
         this.bulletsLeftToShoot = BULLETS;
@@ -200,6 +200,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
                 }
 
                 getShip().translate(dir.getX() * getSpeed(), dir.getY() * getSpeed());
+                getPic().translate(dir.getX() * getSpeed(), dir.getY() * getSpeed());
             }
         }
     }

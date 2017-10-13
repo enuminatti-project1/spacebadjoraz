@@ -82,4 +82,8 @@ public class Bullet implements Movable {
         return bullet;
 
     }
+
+    public int getSpeed() {
+        return speed;
+    }
 }

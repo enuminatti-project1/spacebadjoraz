@@ -1,11 +1,13 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -23,6 +25,8 @@ public class Game {
      * Where the player resides
      */
     private PlayerShip player;
+
+    private LinkedList<Shootable> shootables = new LinkedList<>();
 
     /**
      * This will contain all the bullets shot.
@@ -90,6 +94,9 @@ public class Game {
 
         this.enemy = ShipFactory.createEnemy(background);
         this.player = new PlayerShip(background);
+
+        shootables.add(this.player);
+        shootables.add(this.enemy);
     }
 
 
@@ -102,13 +109,18 @@ public class Game {
             enemy.move();
             player.move();
 
-            for (Bullet b : bullets) {
+            getBullets();
+
+            Iterator<Bullet> bulletIterator = bullets.listIterator();
+
+            while (bulletIterator.hasNext()) {
+                Bullet b = bulletIterator.next();
                 b.move();
                 if (b.getPosition().isInside(enemy.getPosition())) {
                     Position x = enemy.getPosition();
                     enemy.getShip().delete();
                     b.getBullet().delete();
-                    Ellipse e = new Ellipse(enemy.getPosition().getX(), enemy.getPosition().getY(), 50, 50);
+                    Ellipse e = new Ellipse(x.getX(), x.getY(), 50, 50);
                     e.setColor(Color.ORANGE);
                     e.fill();
                     System.out.println("bum!");
@@ -116,11 +128,12 @@ public class Game {
                     break;
 
                 }
-                if (!b.getPosition().isInside(gameLimits)) {
+
+                if (!insideGame(b.getPosition())) {
                     b.getBullet().delete();
+                    bulletIterator.remove();
                 }
             }
-            getBullet();
 
             Thread.sleep(33);
         }
@@ -141,24 +154,23 @@ public class Game {
     }
 
     /**
-     * This gets the player's bullet and saves it so
-     * it can move the bullet.
+     * This gets all shootables' bullets and saves them so
+     * it can move them.
      */
-    public void getBullet() {
-        Bullet newBullet = player.getBullet();
-        Bullet enemyBullet = new Bullet(0, 0, true);
-        if (enemy != null) {
-            enemyBullet = enemy.getBullet();
-        }
+    public void getBullets() {
 
-        if (newBullet != null) {
-            newBullet.setLimits(gameLimits);
-            bullets.add(newBullet);
+        for (Shootable shootable : shootables) {
+            if (shootable == null) {
+                continue;
+            }
 
-        }
-        if (enemyBullet != null && enemy != null) {
-            enemyBullet.setLimits(gameLimits);
-            bullets.add(enemyBullet);
+            try {
+                Bullet newBullet = shootable.getBullet();
+                newBullet.setLimits(gameLimits);
+                bullets.add(newBullet);
+            }
+            catch (NoBullet ignored) {
+            }
         }
 
     }

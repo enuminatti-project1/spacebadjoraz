@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.Bullet;
 
 /**
@@ -26,5 +27,5 @@ public interface Shootable {
      *
      * @return the shot Bullet.
      */
-    Bullet getBullet();
+    Bullet getBullet() throws NoBullet;
 }

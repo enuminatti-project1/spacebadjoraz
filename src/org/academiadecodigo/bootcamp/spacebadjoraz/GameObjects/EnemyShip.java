@@ -1,12 +1,14 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
+import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
  * Created by Someone who is not me on 09/10/17.
  */
-public class EnemyShip extends Ship {
+public class EnemyShip extends Ship implements Shootable {
 
     private static final int SHIPWIDTH = 30;
     private static final int SHIPHEIGHT = 40;
@@ -54,23 +56,26 @@ public class EnemyShip extends Ship {
      * The enemy can't shoot for now.
      * TODO: make the enemy shoot after mvp
      */
+    @Override
     public void shoot() {
 
         // Bullet bullet = new Bullet(false);
 
     }
 
+    @Override
     public void stopShooting() {
 
     }
 
-    public Bullet getBullet() {
+    @Override
+    public Bullet getBullet() throws NoBullet {
         if (remainPath < 3) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY() + getShip().getHeight() + 2;
             return new Bullet(x, y, false);
         }
-        return null;
+        throw new NoBullet();
     }
 
 

@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
+import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Movable;
@@ -118,14 +119,14 @@ public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
      * @return the Bullet that was created
      */
     @Override
-    public Bullet getBullet() {
+    public Bullet getBullet() throws NoBullet {
         if (this.shooting && this.bulletsLeftToShoot > 0) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
             this.bulletsLeftToShoot--;
             return new Bullet(x, y, true);
         }
-        return null;
+        throw new NoBullet();
     }
 
 

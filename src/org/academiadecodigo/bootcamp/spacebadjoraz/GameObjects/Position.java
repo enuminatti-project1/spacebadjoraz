@@ -33,8 +33,10 @@ public class Position {
      * @return true or false if the caller is inside the position
      */
     public boolean isInside(Position position, int speed){
-        return (this.x - position.getX() < speed
-                || position.getMaxX() - this.getMaxX() < speed);
+        return (getX() - position.getX() < speed ||
+                position.getMaxX() - getMaxX() < speed ||
+                getY() - position.getY() < speed ||
+                position.getMaxY() - getMaxY() < speed);
     }
 
     public int getX() {

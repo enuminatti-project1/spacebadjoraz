@@ -4,15 +4,52 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
  * Created by Someone who is not me on 09/10/17.
  */
 public class ShipFactory {
+
+
+    public enum Level{
+        ONE("Filipe", "resources/img/java.png", 20, 1),
+        TWO("Pedro", "resources/img/java.png", 30,2),
+        TREE("Jorge", "resources/img/java.png", 40,3),
+        FOUR("Catarina", "resources/img/java.png",60,4),
+        FIVE("Ferrão","resources/img/java.png",1000,50);
+
+        private String name;
+        private String picPath;
+        private int health;
+        private int bulletPower;
+
+        Level(String name, String picPath, int health, int bulletPower) {
+            this.name = name;
+            this.picPath = picPath;
+            this.health = health;
+            this.bulletPower = bulletPower;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPicPath() {
+            return picPath;
+        }
+
+        public int getHealth() {
+            return health;
+        }
+
+        public int getBulletPower() {
+            return bulletPower;
+        }
+    }
     /**
      * This generates a new enemy.
      * TODO: generate different enemies
      *
      * @return created enemy
      */
-    public static EnemyShip createEnemy(Position gameArea){
+    public static EnemyShip createEnemy(Position gameArea, Level level){
 
-        return new EnemyShip(gameArea, 20, "Teachers", "resources/img/java.png");
+        return new EnemyShip(gameArea, level.getName(), level.getPicPath(), level.getHealth(), level.getBulletPower());
 
     }
 }

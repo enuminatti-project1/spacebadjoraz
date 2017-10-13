@@ -35,10 +35,10 @@ public abstract class Ship implements Movable, Shootable {
         this.textName = new Text(0,0,name);
         this.textHealth = new Text(0,0, String.valueOf(getPercentageHealth()));
         this.bulletPower = bulletPower;
-//        this.ship.setColor(type.getColor());
-//        this.ship.fill();
         setPic(ship.getX(), ship.getY(), picPath);
         pic.delete();
+        this.textName = new Text(0,0,this.name);
+        this.textHealth =  new Text(0,0,String.valueOf(getPercentageHealth()) + " %");
     }
 
     /**
@@ -66,20 +66,12 @@ public abstract class Ship implements Movable, Shootable {
         return this.health;
     }
 
-    public int getPercentageHealth(){
-        return (int)(((double)health / (double)maxHealth) * 100);
-    }
-
-    public void setTextName (Text t){
-        this.textName = t;
+    public String getPercentageHealth(){
+        return String.valueOf((int)(((double)health / (double)maxHealth) * 100));
     }
 
     public Text getTextName(){
         return textName;
-    }
-
-    public void setTextHealth (Text t){
-        this.textName = t;
     }
 
     public Text getTextHealth(){

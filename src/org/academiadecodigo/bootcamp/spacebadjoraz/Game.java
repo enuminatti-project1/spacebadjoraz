@@ -41,6 +41,7 @@ public class Game {
      */
 
     private Ellipse explosion;
+    private LinkedList<Ellipse> explosions;
 
     /**
      * The background for the game
@@ -111,7 +112,7 @@ public class Game {
         updateShipInfo(ships.get(1));
 
         shootables.addAll(ships);
-
+        explosions = new LinkedList<>();
     }
 
 
@@ -120,13 +121,13 @@ public class Game {
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
-        while (enemy != null && player !=null) {
+        while (enemy != null && player != null) {
             enemy.move();
             player.move();
 
             getBullets();
 
-            if (explosion != null) {
+            for (Ellipse explosion : explosions) {
                 explosion.delete();
             }
 
@@ -136,7 +137,7 @@ public class Game {
                 Bullet b = bulletIterator.next();
                 b.move();
 
-                for(Ship s : ships  ){
+                for (Ship s : ships) {
                     if (b.getPosition().isInside(s.getPosition())) {
                         hit(s, b);
                         bulletIterator.remove();
@@ -152,10 +153,10 @@ public class Game {
             Thread.sleep(33);
         }
 
-        //Player loose
-        if (player == null){
-            Text t = new Text(400, 300, "YOU LOOSE!");
-            t.grow(50, 50);
+        //Player lose
+        if (player == null) {
+            Text t = new Text(400, 300, "BURRO DO CARALHO!");
+            t.grow(20, 5);
             t.setColor(Color.RED);
             t.draw();
             System.out.println("we win");
@@ -164,9 +165,10 @@ public class Game {
                         t.getHeight() > background.getHeight()) {
                     break;
                 }
-                t.grow(10, 10);
+                t.grow(10, 4);
                 Thread.sleep(33);
             }
+            Thread.sleep(1000);
             System.exit(0);
         }
 
@@ -202,8 +204,7 @@ public class Game {
                 Bullet newBullet = shootable.getBullet();
                 newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
-            }
-            catch (NoBullet ignored) {
+            } catch (NoBullet ignored) {
             }
         }
 
@@ -224,21 +225,22 @@ public class Game {
 
     /**
      * Deletes the bullet on impact and call the method to make the explosion
+     *
      * @param shootable
      * @param b
      */
     public void hit(Ship shootable, Bullet b) {
-        int health = shootable.hit(2);
+        int health = shootable.hit(5);
         b.getBullet().delete();
 
         Position x = shootable.getPosition();
         explosion(x);
 
         // If the heath goes to zero kills the ship
-        if(health <= 0) {
+        if (health <= 0) {
             shootable.getShip().delete();
             System.out.println("bum!");
-            if (shootable instanceof PlayerShip){
+            if (shootable instanceof PlayerShip) {
                 player = null;
                 return;
             }
@@ -248,28 +250,31 @@ public class Game {
 
     /**
      * creates the explosion
+     *
      * @param pos
      */
     public void explosion(Position pos) {
 
-        explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
-        explosion.setColor(Color.ORANGE);
-        explosion.fill();
+        Ellipse newExplosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
+        newExplosion.setColor(Color.ORANGE);
+        newExplosion.fill();
+        explosions.add(newExplosion);
     }
 
     /**
      * Update the ships info on the sides of the screen
+     *
      * @param ship The ship to update the information
      */
-    public void updateShipInfo(Ship ship){
+    public void updateShipInfo(Ship ship) {
 
-        if (ship.getTextHealth() != null && ship.getTextName() != null){
+        if (ship.getTextHealth() != null && ship.getTextName() != null) {
             ship.getTextName().delete();
             ship.getTextHealth().delete();
         }
 
         Rectangle r;
-        if (ship instanceof EnemyShip){
+        if (ship instanceof EnemyShip) {
             r = enemyinfo;
         } else {
             r = playerInfo;

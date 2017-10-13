@@ -53,6 +53,11 @@ public class Game {
     private Rectangle enemyinfo;
     private Position gameLimits;
 
+    private Text plNameText;
+    private Text plHealthText;
+    private Text enNameText;
+    private Text enHealthText;
+
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final int PADDING = 10;
@@ -114,14 +119,14 @@ public class Game {
         ships.add(this.player);
         ships.add(this.enemy);
 
-        updateShipInfo(ships.get(0));
-        updateShipInfo(ships.get(1));
-
         shootables.addAll(ships);
 
         enemy.getPic().draw();
         player.getPic().draw();
 
+        setShipInfo();
+        updateShipInfo(enemy);
+        updateShipInfo(player);
     }
 
 
@@ -167,6 +172,7 @@ public class Game {
                     enemy = enemies.removeFirst();
                     enemy.getPic().draw();
                     ships.add(enemy);
+                    shootables.add(enemy);
                     updateShipInfo(enemy);
                 }
             }
@@ -258,14 +264,15 @@ public class Game {
 
         // If the heath goes to zero kills the ship
         if(health <= 0) {
-            if (shootable instanceof EnemyShip){
-                enemy = null;
+            if (shootable instanceof PlayerShip){
+                player = null;
+                return;
             }
+            enemy = null;
             shootable.getShip().delete();
+            shootables.remove(shootable);
             ships.remove(shootable);
             shootable.getPic().delete();
-            //shootable = null;
-            System.out.println("bum!");
         }
     }
 
@@ -286,30 +293,42 @@ public class Game {
      */
     public void updateShipInfo(Ship ship){
 
-        if (ship.getTextHealth() != null && ship.getTextName() != null){
-            ship.getTextName().delete();
-            ship.getTextHealth().delete();
-        }
-
-        Rectangle r;
-        if (ship instanceof EnemyShip){
-            r = enemyinfo;
+        if (ship instanceof PlayerShip) {
+            plNameText.setText(ship.getName());
+            plNameText.draw();
+            plHealthText.setText(ship.getPercentageHealth());
+            plHealthText.draw();
         } else {
-            r = playerInfo;
+            enHealthText.setText(ship.getPercentageHealth());
+            enHealthText.draw();
+            enNameText.setText(ship.getName());
+            enNameText.draw();
         }
 
-        Text temptext = new Text(r.getX() + 10, r.getHeight() + r.getY() - 100, ship.getName());
-        temptext.grow(0, 6);
-        temptext.setColor(Color.RED);
-        temptext.draw();
-        ship.setTextName(temptext);
+    }
 
+    private void setShipInfo(){
 
-        Text temptext2 = new Text(r.getX() + 10, r.getHeight() + r.getY() - 60, String.valueOf(ship.getPercentageHealth()) + " %");
-        temptext2.grow(0, 5);
-        temptext2.setColor(Color.WHITE);
-        temptext2.draw();
-        ship.setTextHealth(temptext2);
+        plNameText = player.getTextName();
+        plNameText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 100);
+        plNameText.grow(0, 6);
+        plNameText.setColor(Color.RED);
+
+        plHealthText = player.getTextHealth();
+        plHealthText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 60);
+        plHealthText.grow(0, 5);
+        plHealthText.setColor(Color.WHITE);
+
+        enNameText = enemy.getTextName();
+        enNameText.translate(enemyinfo.getX() + 10, enemyinfo.getHeight() + enemyinfo.getY() - 100);
+        enNameText.grow(0, 6);
+        enNameText.setColor(Color.RED);
+
+        enHealthText = enemy.getTextHealth();
+        enHealthText.translate(enemyinfo.getX() + 10, enemyinfo.getHeight() + enemyinfo.getY() - 60);
+        enHealthText.grow(0, 5);
+        enHealthText.setColor(Color.WHITE);
+
     }
 }
 

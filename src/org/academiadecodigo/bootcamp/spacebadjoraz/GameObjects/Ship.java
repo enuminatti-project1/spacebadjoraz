@@ -3,6 +3,8 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by Someone who is not me on 09/10/17.
@@ -12,16 +14,27 @@ public abstract class Ship implements Movable, Shootable {
 
     private Rectangle ship;
     private Position limits;
+    private Picture pic;
+    private String picPath;
     private int speed;
     private int health;
+    private int maxHealth;
+    private String name;
+    private Text textName;
+    private Text textHealth;
 
     /**
      *
      * @param ship Rectangle with the temporary aspect of the ship
      */
-    protected void setShip(Rectangle ship, int health) {
+    protected void setShip(Rectangle ship, int health, String name, String picPath) {
         this.ship = ship;
+        this.maxHealth = health;
         this.health = health;
+        this.name = name;
+        this.textName = new Text(0,0,name);
+        this.textHealth = new Text(0,0,String.valueOf(getPercentageHealth()));
+        this.picPath = picPath;
     }
 
     /**
@@ -30,6 +43,47 @@ public abstract class Ship implements Movable, Shootable {
      */
     public Rectangle getShip() {
         return ship;
+    }
+
+    public String getPicPath() {
+        return picPath;
+    }
+
+    public Picture getPic() {
+        return pic;
+    }
+
+    public void setPic(int x ,int y) {
+        this.pic = new Picture(x, y, this.picPath);
+        pic.draw();
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
+
+    public int getPercentageHealth(){
+        return (int)(((double)health / (double)maxHealth) * 100);
+    }
+
+    public void setTextName (Text t){
+        this.textName = t;
+    }
+
+    public Text getTextName(){
+        return textName;
+    }
+
+    public void setTextHealth (Text t){
+        this.textName = t;
+    }
+
+    public Text getTextHealth(){
+        return textHealth;
     }
 
     @Override
@@ -109,6 +163,7 @@ public abstract class Ship implements Movable, Shootable {
                 }
 
                 getShip().translate(dir.getX() * speed, dir.getY() * speed);
+                getPic().translate(dir.getX() * speed, dir.getY() * speed);
             }
         }
     }

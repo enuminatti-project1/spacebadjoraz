@@ -1,12 +1,12 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
-import javafx.geometry.Pos;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -19,15 +19,17 @@ public class Game {
     /**
      * Where the enemy will reside
      */
-    private EnemyShip enemy;
+    private Ship enemy;
 
 
     /**
      * Where the player resides
      */
-    private PlayerShip player;
+    private Ship player;
 
     private LinkedList<Shootable> shootables = new LinkedList<>();
+
+    private LinkedList<Ship> ships = new LinkedList<>();
 
     /**
      * This will contain all the bullets shot.
@@ -84,8 +86,9 @@ public class Game {
         canvas.draw();
 
         background = new Rectangle(PADDING + PL_WIDTH, PADDING, WIDTH - PL_WIDTH - EN_WIDTH, HEIGHT);
-        background.setColor(Color.BLUE);
-        background.fill();
+
+        Picture back = new Picture(PADDING + PL_WIDTH, PADDING, "img/background 500x600.png");
+        back.draw();
 
         playerInfo = new Rectangle(PADDING, PADDING, PL_WIDTH, PL_HEIGHT);
         playerInfo.setColor(Color.BLACK);
@@ -98,11 +101,23 @@ public class Game {
         gameLimits = new Position(background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
 
-        this.enemy = ShipFactory.createEnemy(background);
-        this.player = new PlayerShip(background);
+        //this.enemy = ShipFactory.createEnemy(background);
+        //this.player = new PlayerShip(background);
 
-        shootables.add(this.player);
-        shootables.add(this.enemy);
+        //ships = new Ship[5];
+        //ships[0] = new PlayerShip(background);
+        //ships[1] = ShipFactory.createEnemy(background);
+        this.player = new PlayerShip(background);
+        this.enemy = ShipFactory.createEnemy(background);
+
+        ships.add(this.player);
+        ships.add(this.enemy);
+
+        updateShipInfo(ships.get(0));
+        updateShipInfo(ships.get(1));
+
+        shootables.addAll(ships);
+
     }
 
 
@@ -111,7 +126,7 @@ public class Game {
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
-        while (enemy != null) {
+        while (enemy != null && player !=null) {
             enemy.move();
             player.move();
 
@@ -126,14 +141,13 @@ public class Game {
             while (bulletIterator.hasNext() && enemy != null && player != null) {
                 Bullet b = bulletIterator.next();
                 b.move();
-                if (b.getPosition().isInside(enemy.getPosition())) {
-                    hit(enemy, b);
-                    bulletIterator.remove();
-                }
 
-                if (b.getPosition().isInside(player.getPosition())) {
-                    hit(player, b);
-                    bulletIterator.remove();
+                for(Ship s : ships  ){
+                    if (b.getPosition().isInside(s.getPosition())) {
+                        hit(s, b);
+                        bulletIterator.remove();
+                        updateShipInfo(s);
+                    }
                 }
 
                 if (!insideGame(b.getPosition())) {
@@ -144,6 +158,26 @@ public class Game {
 
             Thread.sleep(33);
         }
+
+        //Player loose
+        if (player == null){
+            Text t = new Text(400, 300, "YOU LOOSE!");
+            t.grow(50, 50);
+            t.setColor(Color.RED);
+            t.draw();
+            System.out.println("we win");
+            while (true) {
+                if (t.getWidth() > background.getWidth() ||
+                        t.getHeight() > background.getHeight()) {
+                    break;
+                }
+                t.grow(10, 10);
+                Thread.sleep(33);
+            }
+            System.exit(0);
+        }
+
+        //Player win
         Text t = new Text(400, 300, "YOU WIN!");
         t.grow(50, 50);
         t.setColor(Color.GREEN);
@@ -195,28 +229,72 @@ public class Game {
                 gameLimits.getMaxY() >= pos.getMaxY();
     }
 
+    /**
+     * Deletes the bullet on impact and call the method to make the explosion
+     * @param shootable
+     * @param b
+     */
     public void hit(Ship shootable, Bullet b) {
-        int health = shootable.hit(1);
+        int health = shootable.hit(2);
         b.getBullet().delete();
 
         Position x = shootable.getPosition();
         explosion(x);
 
+        // If the heath goes to zero kills the ship
         if(health <= 0) {
             shootable.getShip().delete();
             System.out.println("bum!");
+            if (shootable instanceof PlayerShip){
+                player = null;
+                return;
+            }
             enemy = null;
         }
     }
 
+    /**
+     * creates the explosion
+     * @param pos
+     */
     public void explosion(Position pos) {
 
         explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
         explosion.setColor(Color.ORANGE);
         explosion.fill();
-
     }
 
+    /**
+     * Update the ships info on the sides of the screen
+     * @param ship The ship to update the information
+     */
+    public void updateShipInfo(Ship ship){
+
+        if (ship.getTextHealth() != null && ship.getTextName() != null){
+            ship.getTextName().delete();
+            ship.getTextHealth().delete();
+        }
+
+        Rectangle r;
+        if (ship instanceof EnemyShip){
+            r = enemyinfo;
+        } else {
+            r = playerInfo;
+        }
+
+        Text temptext = new Text(r.getX() + 10, r.getHeight() + r.getY() - 100, ship.getName());
+        temptext.grow(0, 6);
+        temptext.setColor(Color.RED);
+        temptext.draw();
+        ship.setTextName(temptext);
+
+
+        Text temptext2 = new Text(r.getX() + 10, r.getHeight() + r.getY() - 60, String.valueOf(ship.getPercentageHealth()) + " %");
+        temptext2.grow(0, 5);
+        temptext2.setColor(Color.WHITE);
+        temptext2.draw();
+        ship.setTextHealth(temptext2);
+    }
 }
 
 // TODO: Create a fortress colidable, with health

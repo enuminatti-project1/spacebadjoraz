@@ -37,15 +37,16 @@ public class EnemyShip extends Ship {
         }
     }
 
-    public EnemyShip(Rectangle canvas, int health) {
+    public EnemyShip(Rectangle canvas, int health, String name, String picPath) {
         Rectangle r = new Rectangle(
                 (canvas.getX() + canvas.getWidth() / 2),
                 30,
                 SHIPWIDTH,
                 SHIPHEIGHT);
-        r.setColor(Color.BLACK);
-        r.fill();
-        super.setShip(r, health);
+        //r.setColor(Color.PINK);
+        //r.fill();
+        super.setShip(r, health, name, picPath);
+        super.setPic(r.getX(), r.getY());
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(5);
         currentDirection = EnemyDirection.RIGHT;
@@ -99,9 +100,11 @@ public class EnemyShip extends Ship {
         switch (this.currentDirection) {
             case RIGHT:
                 getShip().translate(getSpeed(), 0);
+                getPic().translate(getSpeed(), 0);
                 break;
             case LEFT:
                 getShip().translate(-getSpeed(), 0);
+                getPic().translate(-getSpeed(), 0);
                 break;
         }
     }

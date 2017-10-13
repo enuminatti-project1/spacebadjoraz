@@ -17,7 +17,8 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class PlayerShip extends Ship implements KeyboardHandler {
 
     private Keyboard key;
-    private Picture pic;    //Picture of the Ship
+    //private Picture pic;    //Picture of the Ship
+
 
 
     /**
@@ -50,9 +51,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         Rectangle r = new Rectangle(
                 canvas.getWidth()/2.0, 500,
                 50, 60);
-        r.setColor(Color.RED);
-        r.fill();
-        super.setShip(r, HEALTH);
+        //r.setColor(Color.RED);
+        //r.fill();
+        super.setShip(r, HEALTH, "Enuminatti", "img/plLogo.png");
+        super.setPic(r.getX(), r.getY());
         super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
         super.setSpeed(8);
         configKeyboard();

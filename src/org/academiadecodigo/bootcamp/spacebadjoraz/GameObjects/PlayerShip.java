@@ -18,6 +18,10 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     //private Picture pic;    //Picture of the Ship
 
 
+    /**
+     * This enum should be exclusive to PlayerShip(s) since
+     * it concerns which keys are pressed/released.
+     */
     enum PlayerDirection {
         RIGHT(1, 0),
         LEFT(-1, 0),
@@ -57,7 +61,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
          * Enable or disable the direction of the ship
          * When there's no direction defined enable 'NONE' direction
          *
-         * @param enabled
+         * @param enabled set to True if direction/key is pressed
          */
         public void setEnabled(boolean enabled) {
             this.enabled = enabled;

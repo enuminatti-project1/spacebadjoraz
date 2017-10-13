@@ -12,7 +12,7 @@ public class ShipFactory {
      */
     public static EnemyShip createEnemy(Position gameArea){
 
-        return new EnemyShip(gameArea, 20, "Teachers", "img/java.png");
+        return new EnemyShip(gameArea, 20, "Teachers", "resources/img/java.png");
 
     }
 }

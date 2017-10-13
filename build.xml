@@ -8,6 +8,7 @@
         <property name="main.class" value="org.academiadecodigo.bootcamp.spacebadjoraz.Game" />
         <property name="build.dir" value="build" />
         <property name="classes.dir" value="${build.dir}/classes" />
+	<property name="resources.dir" value="resources"/>
         <property name="lib.dir" value="lib" />
         <path id="classpath">
             <fileset dir="${lib.dir}" includes="**/*.jar" />
@@ -36,9 +37,12 @@
         <jar destfile="${build.dir}/${project.name}.jar" basedir="${classes.dir}">
             <manifest>
                 <attribute name="Main-Class" value="${main.class}" />
-                <attribute name="Class-Path" value="${lib.dir}" />
+		<attribute name="Class-Path" value="${lib.dir} ${resources.dir}" />
             </manifest>
             <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+	    <fileset dir=".">
+		    <include name="**/${resources.dir}/img/**"/>
+            </fileset>
         </jar>
     </target>
 

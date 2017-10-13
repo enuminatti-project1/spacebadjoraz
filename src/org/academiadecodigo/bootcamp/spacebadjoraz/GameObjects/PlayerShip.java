@@ -110,7 +110,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), 50),
                         500, 50, 50),
                 gameLimits, SPEED, HEALTH, ShipType.PLAYER,
-                "Enuminatti", "img/plLogo.png");
+                "Enuminatti", "resources/img/plLogo.png");
         configKeyboard();
 
         this.bulletsLeftToShoot = BULLETS;

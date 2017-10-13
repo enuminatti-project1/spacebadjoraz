@@ -87,7 +87,7 @@ public class Game {
 
         background = new Rectangle(PADDING + PL_WIDTH, PADDING, WIDTH - PL_WIDTH - EN_WIDTH, HEIGHT);
 
-        Picture back = new Picture(PADDING + PL_WIDTH, PADDING, "img/background 500x600.png");
+        Picture back = new Picture(PADDING + PL_WIDTH, PADDING, "resources/img/background 500x600.png");
         back.draw();
 
         playerInfo = new Rectangle(PADDING, PADDING, PL_WIDTH, PL_HEIGHT);

@@ -38,11 +38,11 @@ public class EnemyShip extends Ship {
         }
     }
 
-    public EnemyShip(Position gameLimits, int health, String name, String picPath) {
-
+    //public EnemyShip(Position gameLimits, int health, String name, String picPath) {
+    public EnemyShip(Position gameLimits, String name, String picPath, int health, int bulletPower){
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), SHIPWIDTH),
                 30, SHIPWIDTH, SHIPHEIGHT), gameLimits, SPEED, health, ShipType.ENEMY,
-                name, picPath);
+                name, picPath, bulletPower);
         currentDirection = EnemyDirection.RIGHT;
         remainPath = RANDPATH;
     }
@@ -68,7 +68,7 @@ public class EnemyShip extends Ship {
         if ((remainPath > 2 && remainPath < 7) || remainPath > 15 && remainPath < 20 ) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY() + getShip().getHeight() + 2;
-            return new Bullet(x, y, false);
+            return new Bullet(x, y, false, super.getBulletPower());
         }
         throw new NoBullet();
     }

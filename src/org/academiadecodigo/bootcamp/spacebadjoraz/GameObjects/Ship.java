@@ -3,7 +3,6 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Movable;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -19,13 +18,14 @@ public abstract class Ship implements Movable, Shootable {
     private int speed;
     private int health;
     private int maxHealth;
+    private int bulletPower;
     private String name;
     private Text textName;
     private Text textHealth;
 
     public Ship(Rectangle ship, Position gameLimits,
                 int speed, int health, ShipType type,
-                String name, String picPath) {
+                String name, String picPath, int bulletPower) {
         this.ship = ship;
         this.limits = gameLimits;
         this.speed = speed;
@@ -34,6 +34,7 @@ public abstract class Ship implements Movable, Shootable {
         this.name = name;
         this.textName = new Text(0,0,name);
         this.textHealth = new Text(0,0, String.valueOf(getPercentageHealth()));
+        this.bulletPower = bulletPower;
 //        this.ship.setColor(type.getColor());
 //        this.ship.fill();
         setPic(ship.getX(), ship.getY(), picPath);
@@ -113,6 +114,10 @@ public abstract class Ship implements Movable, Shootable {
     public int hit(int bulletPower){
         health -= bulletPower;
         return health;
+    }
+
+    public int getBulletPower() {
+        return bulletPower;
     }
 
     /**

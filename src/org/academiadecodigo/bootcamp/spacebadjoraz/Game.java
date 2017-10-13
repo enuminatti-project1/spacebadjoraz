@@ -102,7 +102,7 @@ public class Game {
                 background.getWidth(), background.getHeight());
 
         this.player = new PlayerShip(gameLimits);
-        this.enemy = ShipFactory.createEnemy(gameLimits);
+        this.enemy = ShipFactory.createEnemy(gameLimits, ShipFactory.Level.ONE);
 
         ships.add(this.player);
         ships.add(this.enemy);
@@ -228,7 +228,7 @@ public class Game {
      * @param b
      */
     public void hit(Ship shootable, Bullet b) {
-        int health = shootable.hit(2);
+        int health = shootable.hit(b.getBulletPower());
         b.getBullet().delete();
 
         Position x = shootable.getPosition();

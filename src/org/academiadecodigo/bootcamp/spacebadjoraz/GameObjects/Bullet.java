@@ -9,6 +9,7 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
  */
 public class Bullet implements Movable {
 
+    private final int bulletPower;
     /**
      * Speed the bullet travels at.
      *
@@ -33,11 +34,12 @@ public class Bullet implements Movable {
      *
      * @param shootUp True if bullet shoots up, False if it shoots down
      */
-    public Bullet(int x, int y, boolean shootUp) {
+    public Bullet(int x, int y, boolean shootUp, int bulletPower) {
         this.shootUp = shootUp;
         this.bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
         this.bullet.setColor(Color.YELLOW);
         this.bullet.fill();
+        this.bulletPower = bulletPower;
 
         this.speed = 15;
     }
@@ -75,6 +77,10 @@ public class Bullet implements Movable {
 
         this.speed = speed;
 
+    }
+
+    public int getBulletPower() {
+        return bulletPower;
     }
 
     public Ellipse getBullet() {

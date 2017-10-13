@@ -110,7 +110,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), 50),
                         500, 50, 50),
                 gameLimits, SPEED, HEALTH, ShipType.PLAYER,
-                "Enuminatti", "resources/img/plLogo.png");
+                "Enuminatti", "resources/img/plLogo.png", 1);
         configKeyboard();
 
         this.bulletsLeftToShoot = BULLETS;
@@ -233,7 +233,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY();
             this.bulletsLeftToShoot--;
-            return new Bullet(x, y, true);
+            return new Bullet(x, y, true,1);
         }
         throw new NoBullet();
     }

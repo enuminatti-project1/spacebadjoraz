@@ -186,7 +186,6 @@ public class Game {
             t.grow(50, 50);
             t.setColor(Color.RED);
             t.draw();
-            System.out.println("we win");
             while (true) {
                 if (t.getWidth() > background.getWidth() ||
                         t.getHeight() > background.getHeight()) {
@@ -195,6 +194,7 @@ public class Game {
                 t.grow(10, 10);
                 Thread.sleep(33);
             }
+            Thread.sleep(500);
             System.exit(0);
         }
 
@@ -203,7 +203,6 @@ public class Game {
         t.grow(50, 50);
         t.setColor(Color.GREEN);
         t.draw();
-        System.out.println("we win");
         while (true) {
             if (t.getWidth() > background.getWidth() ||
                     t.getHeight() > background.getHeight()) {
@@ -212,6 +211,7 @@ public class Game {
             t.grow(10, 10);
             Thread.sleep(33);
         }
+        Thread.sleep(500);
         System.exit(0);
     }
 

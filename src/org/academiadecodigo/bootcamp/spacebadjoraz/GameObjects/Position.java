@@ -62,4 +62,12 @@ public class Position {
     public int getMaxY() {
         return y + height;
     }
+
+    public int getMidX() {
+        return getX() + (int) (getWidth() / 2.0);
+    }
+
+    public int getMidY() {
+        return getY() + (int) (getHeight() / 2.0);
+    }
 }

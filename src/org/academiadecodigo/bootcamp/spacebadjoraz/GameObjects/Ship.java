@@ -23,14 +23,19 @@ public abstract class Ship implements Movable, Shootable {
     private Text textName;
     private Text textHealth;
 
-    /**
-     *
-     * @param ship Rectangle with the temporary aspect of the ship
-     */
-    protected void setShip(Rectangle ship, int health, String name, String picPath) {
+    public Ship(Rectangle ship, Position gameLimits,
+                int speed, int health, ShipType type) {
         this.ship = ship;
+        this.limits = gameLimits;
+        this.speed = speed;
         this.maxHealth = health;
         this.health = health;
+        this.ship.setColor(type.getColor());
+        this.ship.fill();
+        setPic(ship.getX(), ship.getY());
+    }
+
+    protected void setShip(String name, String picPath) {
         this.name = name;
         this.textName = new Text(0,0,name);
         this.textHealth = new Text(0,0,String.valueOf(getPercentageHealth()));

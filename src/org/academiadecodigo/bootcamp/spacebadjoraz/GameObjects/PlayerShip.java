@@ -1,7 +1,7 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
-import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.bootcamp.spacebadjoraz.Utils.Calculations;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -88,6 +88,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     private static final int BULLETS = 5;
 
+    private static final int SPEED = 8;
 
     private static final int HEALTH = 100;
 
@@ -99,18 +100,13 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     /**
      * Initialize the player's ship and graphical representation.
      *
-     * @param canvas is the Game's Rectangle so the ship knows the game limits and placement
+     * @param gameLimits gives the ship the Game's limits
      */
-    public PlayerShip(Rectangle canvas) {
-        Rectangle r = new Rectangle(
-                canvas.getWidth() / 2.0, 500,
-                50, 60);
-        //r.setColor(Color.RED);
-        //r.fill();
-        super.setShip(r, HEALTH, "Enuminatti", "img/plLogo.png");
-        super.setPic(r.getX(), r.getY());
-        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
-        super.setSpeed(8);
+    public PlayerShip(Position gameLimits) {
+        super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), 50),
+                        500, 50, 60),
+                gameLimits, SPEED, HEALTH, ShipType.PLAYER);
+        super.setShip("Enuminatti", "img/plLogo.png");
         configKeyboard();
 
         this.bulletsLeftToShoot = BULLETS;

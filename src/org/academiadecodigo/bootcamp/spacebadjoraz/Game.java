@@ -101,14 +101,8 @@ public class Game {
         gameLimits = new Position(background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
 
-        //this.enemy = ShipFactory.createEnemy(background);
-        //this.player = new PlayerShip(background);
-
-        //ships = new Ship[5];
-        //ships[0] = new PlayerShip(background);
-        //ships[1] = ShipFactory.createEnemy(background);
-        this.player = new PlayerShip(background);
-        this.enemy = ShipFactory.createEnemy(background);
+        this.player = new PlayerShip(gameLimits);
+        this.enemy = ShipFactory.createEnemy(gameLimits);
 
         ships.add(this.player);
         ships.add(this.enemy);

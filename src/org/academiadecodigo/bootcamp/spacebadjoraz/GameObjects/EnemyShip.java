@@ -2,7 +2,7 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
-import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.bootcamp.spacebadjoraz.Utils.Calculations;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 /**
@@ -13,6 +13,7 @@ public class EnemyShip extends Ship {
     private static final int SHIPWIDTH = 30;
     private static final int SHIPHEIGHT = 40;
     private static final int RANDPATH = 50;
+    private static final int SPEED = 5;
 
     private EnemyDirection currentDirection;
     private int remainPath;
@@ -37,18 +38,11 @@ public class EnemyShip extends Ship {
         }
     }
 
-    public EnemyShip(Rectangle canvas, int health, String name, String picPath) {
-        Rectangle r = new Rectangle(
-                (canvas.getX() + canvas.getWidth() / 2),
-                30,
-                SHIPWIDTH,
-                SHIPHEIGHT);
-        //r.setColor(Color.PINK);
-        //r.fill();
-        super.setShip(r, health, name, picPath);
-        super.setPic(r.getX(), r.getY());
-        super.setLimits(new Position(canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight()));
-        super.setSpeed(5);
+    public EnemyShip(Position gameLimits, int health, String name, String picPath) {
+
+        super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), SHIPWIDTH),
+                30, SHIPWIDTH, SHIPHEIGHT), gameLimits, SPEED, health, ShipType.ENEMY);
+        super.setShip(name, picPath);
         currentDirection = EnemyDirection.RIGHT;
         remainPath = RANDPATH;
     }

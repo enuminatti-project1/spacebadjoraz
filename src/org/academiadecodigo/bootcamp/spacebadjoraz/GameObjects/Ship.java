@@ -38,6 +38,7 @@ public abstract class Ship implements Movable, Shootable {
 //        this.ship.setColor(type.getColor());
 //        this.ship.fill();
         setPic(ship.getX(), ship.getY(), picPath);
+        pic.delete();
     }
 
     /**

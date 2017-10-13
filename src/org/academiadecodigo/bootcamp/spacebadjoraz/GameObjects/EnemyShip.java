@@ -8,7 +8,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 /**
  * Created by Someone who is not me on 09/10/17.
  */
-public class EnemyShip extends Ship implements Shootable {
+public class EnemyShip extends Ship {
 
     private static final int SHIPWIDTH = 30;
     private static final int SHIPHEIGHT = 40;
@@ -70,7 +70,7 @@ public class EnemyShip extends Ship implements Shootable {
 
     @Override
     public Bullet getBullet() throws NoBullet {
-        if (remainPath < 3) {
+        if (remainPath < 4) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY() + getShip().getHeight() + 2;
             return new Bullet(x, y, false);

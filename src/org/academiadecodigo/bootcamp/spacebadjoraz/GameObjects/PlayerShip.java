@@ -14,7 +14,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 /**
  * Created by Someone who is not me on 09/10/17.
  */
-public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
+public class PlayerShip extends Ship implements KeyboardHandler {
 
     private Keyboard key;
     private Picture pic;    //Picture of the Ship
@@ -34,7 +34,7 @@ public class PlayerShip extends Ship implements KeyboardHandler, Shootable {
     private static final int BULLETS = 5;
 
 
-    private static final int HEALTH = 10;
+    private static final int HEALTH = 100;
 
     /**
      * Bullets we can still shoot until the weapon stops shooting

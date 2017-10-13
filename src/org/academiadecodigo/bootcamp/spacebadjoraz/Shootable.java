@@ -28,4 +28,6 @@ public interface Shootable {
      * @return the shot Bullet.
      */
     Bullet getBullet() throws NoBullet;
+
+    int hit(int bulletPower);
 }

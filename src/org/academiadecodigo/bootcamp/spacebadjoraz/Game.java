@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
+import javafx.geometry.Pos;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -32,6 +33,12 @@ public class Game {
      * This will contain all the bullets shot.
      */
     private LinkedList<Bullet> bullets = new LinkedList<>();
+
+    /**
+     * Contain the shape/ image of the Explosions
+     */
+
+    private Ellipse explosion;
 
     /**
      * The background for the game
@@ -88,7 +95,6 @@ public class Game {
         enemyinfo.setColor(Color.BLACK);
         enemyinfo.fill();
 
-
         gameLimits = new Position(background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
 
@@ -111,22 +117,23 @@ public class Game {
 
             getBullets();
 
+            if (explosion != null) {
+                explosion.delete();
+            }
+
             Iterator<Bullet> bulletIterator = bullets.listIterator();
 
-            while (bulletIterator.hasNext()) {
+            while (bulletIterator.hasNext() && enemy != null && player != null) {
                 Bullet b = bulletIterator.next();
                 b.move();
                 if (b.getPosition().isInside(enemy.getPosition())) {
-                    Position x = enemy.getPosition();
-                    enemy.getShip().delete();
-                    b.getBullet().delete();
-                    Ellipse e = new Ellipse(x.getX(), x.getY(), 50, 50);
-                    e.setColor(Color.ORANGE);
-                    e.fill();
-                    System.out.println("bum!");
-                    enemy = null;
-                    break;
+                    hit(enemy, b);
+                    bulletIterator.remove();
+                }
 
+                if (b.getPosition().isInside(player.getPosition())) {
+                    hit(player, b);
+                    bulletIterator.remove();
                 }
 
                 if (!insideGame(b.getPosition())) {
@@ -186,6 +193,28 @@ public class Game {
                 gameLimits.getMaxX() >= pos.getMaxX() &&
                 gameLimits.getY() <= pos.getY() &&
                 gameLimits.getMaxY() >= pos.getMaxY();
+    }
+
+    public void hit(Ship shootable, Bullet b) {
+        int health = shootable.hit(1);
+        b.getBullet().delete();
+
+        Position x = shootable.getPosition();
+        explosion(x);
+
+        if(health <= 0) {
+            shootable.getShip().delete();
+            System.out.println("bum!");
+            enemy = null;
+        }
+    }
+
+    public void explosion(Position pos) {
+
+        explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
+        explosion.setColor(Color.ORANGE);
+        explosion.fill();
+
     }
 
 }

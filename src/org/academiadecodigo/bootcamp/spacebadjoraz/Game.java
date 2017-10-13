@@ -31,6 +31,8 @@ public class Game {
 
     private LinkedList<Ship> ships = new LinkedList<>();
 
+    private LinkedList<Ship> enemies = new LinkedList<>();
+
     /**
      * This will contain all the bullets shot.
      */
@@ -102,7 +104,12 @@ public class Game {
                 background.getWidth(), background.getHeight());
 
         this.player = new PlayerShip(gameLimits);
-        this.enemy = ShipFactory.createEnemy(gameLimits, ShipFactory.Level.ONE);
+
+        for(ShipFactory.Level enemy : ShipFactory.Level.values()){
+            enemies.add(ShipFactory.createEnemy(gameLimits, enemy));
+        }
+
+        this.enemy = enemies.removeFirst();
 
         ships.add(this.player);
         ships.add(this.enemy);
@@ -111,6 +118,9 @@ public class Game {
         updateShipInfo(ships.get(1));
 
         shootables.addAll(ships);
+
+        enemy.getPic().draw();
+        player.getPic().draw();
 
     }
 
@@ -150,7 +160,19 @@ public class Game {
             }
 
             Thread.sleep(33);
+
+            if (enemy == null){
+                if (!enemies.isEmpty()) {
+                    Thread.sleep(1000);
+                    enemy = enemies.removeFirst();
+                    enemy.getPic().draw();
+                    ships.add(enemy);
+                    updateShipInfo(enemy);
+                }
+            }
         }
+
+
 
         //Player loose
         if (player == null){
@@ -236,13 +258,14 @@ public class Game {
 
         // If the heath goes to zero kills the ship
         if(health <= 0) {
-            shootable.getShip().delete();
-            System.out.println("bum!");
-            if (shootable instanceof PlayerShip){
-                player = null;
-                return;
+            if (shootable instanceof EnemyShip){
+                enemy = null;
             }
-            enemy = null;
+            shootable.getShip().delete();
+            ships.remove(shootable);
+            shootable.getPic().delete();
+            //shootable = null;
+            System.out.println("bum!");
         }
     }
 

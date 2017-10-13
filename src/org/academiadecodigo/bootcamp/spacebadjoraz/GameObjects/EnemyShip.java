@@ -82,13 +82,13 @@ public class EnemyShip extends Ship {
         if (getPosition().isInside(getLimits(), getSpeed())) {
             remainPath = RANDPATH;
             this.currentDirection = this.currentDirection.getOpposite();
-            System.out.println("Hit limit: switching to " + currentDirection);
+            //System.out.println("Hit limit: switching to " + currentDirection);
         }
 
         if (remainPath == 0) {
             remainPath = (int) (Math.random() * RANDPATH);
             this.currentDirection = this.currentDirection.getOpposite();
-            System.out.println("Juke: Switching to " + currentDirection);
+            //System.out.println("Juke: Switching to " + currentDirection);
         }
 
         switch (this.currentDirection) {

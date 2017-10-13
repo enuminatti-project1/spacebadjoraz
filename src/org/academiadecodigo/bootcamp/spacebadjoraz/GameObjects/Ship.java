@@ -111,6 +111,7 @@ public abstract class Ship implements Movable, Shootable {
         this.speed = speed;
     }
 
+    @Override
     public int hit(int bulletPower){
         health -= bulletPower;
         return health;
@@ -119,52 +120,6 @@ public abstract class Ship implements Movable, Shootable {
     /**
      * Moves the Ship on the direction set by Direction ENUM values
      */
-    public void move() {
 
-        if (ship == null) {
-            return;
-        }
-
-        for (Direction dir : Direction.values()){
-            if (dir.isEnabled()){
-
-                switch (dir){
-
-                    case RIGHT:
-                        if(getPosition().getMaxX() + speed > limits.getMaxX()){
-                            getShip().translate(limits.getMaxX() - getPosition().getMaxX(), 0);
-                            dir.setEnabled(false);
-                            continue;
-                        }
-                        break;
-                    case LEFT:
-                        if(getPosition().getX() - speed < limits.getX()){
-                            getShip().translate(limits.getX() - getPosition().getX(), 0);
-                            dir.setEnabled(false);
-                            continue;
-                        }
-                        break;
-                    case UP:
-                        if(getPosition().getY() - speed < limits.getY()){
-                            getShip().translate(0, limits.getY() - getPosition().getY());
-                            dir.setEnabled(false);
-                            continue;
-                        }
-                        break;
-                    case DOWN:
-                        if(getPosition().getMaxY() + speed > limits.getMaxY()){
-                            getShip().translate(0, (limits.getMaxY() - getPosition().getMaxY()));
-                            dir.setEnabled(false);
-                            continue;
-                        }
-                        break;
-                    case NONE:
-                        break;
-                }
-
-                getShip().translate(dir.getX() * speed, dir.getY() * speed);
-                getPic().translate(dir.getX() * speed, dir.getY() * speed);
-            }
-        }
-    }
+    public abstract void move();
 }

@@ -1,9 +1,7 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
-import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -19,6 +17,62 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     private Keyboard key;
     //private Picture pic;    //Picture of the Ship
 
+
+    enum PlayerDirection {
+        RIGHT(1, 0),
+        LEFT(-1, 0),
+        UP(0, -1),
+        DOWN(0, 1),
+        NONE(0, 0);
+
+        private int x;
+        private int y;
+        private boolean enabled;
+
+        /**
+         * When the keyboard is implemented, this will be enabled
+         * if you pressed the corresponding key.
+         *
+         * While it's enabled, the player ship will move in these directions
+         * on every frame.
+         *
+         * When disabled, it'll stop moving in that direction.
+         */
+
+        PlayerDirection(int x, int y) {
+            this.x = x;
+            this.y = y;
+            this.enabled = false;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        /**
+         * Enable or disable the direction of the ship
+         * When there's no direction defined enable 'NONE' direction
+         *
+         * @param enabled
+         */
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            if (!this.enabled) {
+                NONE.enabled = true;
+            }
+        }
+
+        /**
+         * @return status of the PlayerDirection
+         */
+        public boolean isEnabled() {
+            return enabled;
+        }
+    }
 
 
     /**
@@ -49,7 +103,7 @@ public class PlayerShip extends Ship implements KeyboardHandler {
      */
     public PlayerShip(Rectangle canvas) {
         Rectangle r = new Rectangle(
-                canvas.getWidth()/2.0, 500,
+                canvas.getWidth() / 2.0, 500,
                 50, 60);
         //r.setColor(Color.RED);
         //r.fill();
@@ -99,6 +153,58 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     }
 
     /**
+     * Moves the Ship on the direction set by PlayerDirection ENUM values
+     */
+    @Override
+    public void move() {
+
+        if (getShip() == null) {
+            return;
+        }
+
+        for (PlayerDirection dir : PlayerDirection.values()) {
+            if (dir.isEnabled()) {
+
+                switch (dir) {
+
+                    case RIGHT:
+                        if (getPosition().getMaxX() + getSpeed() > getLimits().getMaxX()) {
+                            getShip().translate(getLimits().getMaxX() - getPosition().getMaxX(), 0);
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case LEFT:
+                        if (getPosition().getX() - getSpeed() < getLimits().getX()) {
+                            getShip().translate(getLimits().getX() - getPosition().getX(), 0);
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case UP:
+                        if (getPosition().getY() - getSpeed() < getLimits().getY()) {
+                            getShip().translate(0, getLimits().getY() - getPosition().getY());
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case DOWN:
+                        if (getPosition().getMaxY() + getSpeed() > getLimits().getMaxY()) {
+                            getShip().translate(0, (getLimits().getMaxY() - getPosition().getMaxY()));
+                            dir.setEnabled(false);
+                            continue;
+                        }
+                        break;
+                    case NONE:
+                        break;
+                }
+
+                getShip().translate(dir.getX() * getSpeed(), dir.getY() * getSpeed());
+            }
+        }
+    }
+
+    /**
      * Start shooting.
      */
     @Override
@@ -143,19 +249,19 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
             case KeyboardEvent.KEY_A:
-                Direction.LEFT.setEnabled(true);
+                PlayerDirection.LEFT.setEnabled(true);
                 break;
             case KeyboardEvent.KEY_RIGHT:
             case KeyboardEvent.KEY_D:
-                Direction.RIGHT.setEnabled(true);
+                PlayerDirection.RIGHT.setEnabled(true);
                 break;
             case KeyboardEvent.KEY_UP:
             case KeyboardEvent.KEY_W:
-                Direction.UP.setEnabled(true);
+                PlayerDirection.UP.setEnabled(true);
                 break;
             case KeyboardEvent.KEY_DOWN:
             case KeyboardEvent.KEY_S:
-                Direction.DOWN.setEnabled(true);
+                PlayerDirection.DOWN.setEnabled(true);
                 break;
             case KeyboardEvent.KEY_SPACE:
                 shoot();
@@ -174,19 +280,19 @@ public class PlayerShip extends Ship implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
             case KeyboardEvent.KEY_A:
-                Direction.LEFT.setEnabled(false);
+                PlayerDirection.LEFT.setEnabled(false);
                 break;
             case KeyboardEvent.KEY_RIGHT:
             case KeyboardEvent.KEY_D:
-                Direction.RIGHT.setEnabled(false);
+                PlayerDirection.RIGHT.setEnabled(false);
                 break;
             case KeyboardEvent.KEY_UP:
             case KeyboardEvent.KEY_W:
-                Direction.UP.setEnabled(false);
+                PlayerDirection.UP.setEnabled(false);
                 break;
             case KeyboardEvent.KEY_DOWN:
             case KeyboardEvent.KEY_S:
-                Direction.DOWN.setEnabled(false);
+                PlayerDirection.DOWN.setEnabled(false);
                 break;
             case KeyboardEvent.KEY_SPACE:
                 stopShooting();

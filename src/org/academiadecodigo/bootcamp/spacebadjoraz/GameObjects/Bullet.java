@@ -39,7 +39,7 @@ public class Bullet implements Movable {
         this.bullet.setColor(Color.YELLOW);
         this.bullet.fill();
 
-        this.speed = 20;
+        this.speed = 15;
     }
 
     /**

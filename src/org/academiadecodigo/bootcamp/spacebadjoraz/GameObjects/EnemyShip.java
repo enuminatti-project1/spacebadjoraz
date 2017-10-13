@@ -65,7 +65,7 @@ public class EnemyShip extends Ship {
 
     @Override
     public Bullet getBullet() throws NoBullet {
-        if (remainPath < 4) {
+        if ((remainPath > 2 && remainPath < 7) || remainPath > 15 && remainPath < 20 ) {
             int x = (getShip().getWidth() / 2) + getShip().getX();
             int y = getShip().getY() + getShip().getHeight() + 2;
             return new Bullet(x, y, false);

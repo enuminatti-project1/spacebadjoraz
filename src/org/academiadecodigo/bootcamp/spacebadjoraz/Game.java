@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
-import javafx.geometry.Pos;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -8,9 +7,7 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-import sun.awt.image.ImageWatched;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -92,7 +89,7 @@ public class Game {
 
         background = new Rectangle(PADDING + PL_WIDTH, PADDING, WIDTH - PL_WIDTH - EN_WIDTH, HEIGHT);
 
-        Picture back = new Picture(PADDING + PL_WIDTH, PADDING, "resources/img/background 500x600.png");
+        Picture back = new Picture(PADDING + PL_WIDTH, PADDING, "img/background 500x600.png");
         back.draw();
 
         playerInfo = new Rectangle(PADDING, PADDING, PL_WIDTH, PL_HEIGHT);
@@ -240,7 +237,7 @@ public class Game {
      * @param b
      */
     public void hit(Ship shootable, Bullet b) {
-        int health = shootable.hit(1);
+        int health = shootable.hit(2);
         b.getBullet().delete();
 
         Position x = shootable.getPosition();

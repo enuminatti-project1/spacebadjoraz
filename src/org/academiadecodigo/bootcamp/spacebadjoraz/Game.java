@@ -49,7 +49,7 @@ public class Game {
     private Rectangle canvas;
     private Rectangle background;
     private Rectangle playerInfo;
-    private Rectangle enemyinfo;
+    private Rectangle enemyInfo;
     private Position gameLimits;
 
     private Text plNameText;
@@ -86,7 +86,10 @@ public class Game {
     /**
      * Initialize game objects and background
      */
-    public void init() {
+    public void init() throws InterruptedException {
+
+        StartScreen s = new StartScreen();
+        s.start();
 
         canvas = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
         canvas.draw();
@@ -100,9 +103,9 @@ public class Game {
         playerInfo.setColor(Color.BLACK);
         playerInfo.fill();
 
-        enemyinfo = new Rectangle((canvas.getX() + canvas.getWidth()) - EN_WIDTH, PADDING, EN_WIDTH, EN_HEIGHT);
-        enemyinfo.setColor(Color.BLACK);
-        enemyinfo.fill();
+        enemyInfo = new Rectangle((canvas.getX() + canvas.getWidth()) - EN_WIDTH, PADDING, EN_WIDTH, EN_HEIGHT);
+        enemyInfo.setColor(Color.BLACK);
+        enemyInfo.fill();
 
         gameLimits = new Position(background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
@@ -322,16 +325,18 @@ public class Game {
         plHealthText.setColor(Color.WHITE);
 
         enNameText = enemy.getTextName();
-        enNameText.translate(enemyinfo.getX() + 10, enemyinfo.getHeight() + enemyinfo.getY() - 100);
+        enNameText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 100);
         enNameText.grow(0, 6);
         enNameText.setColor(Color.RED);
 
         enHealthText = enemy.getTextHealth();
-        enHealthText.translate(enemyinfo.getX() + 10, enemyinfo.getHeight() + enemyinfo.getY() - 60);
+        enHealthText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 60);
         enHealthText.grow(0, 5);
         enHealthText.setColor(Color.WHITE);
 
     }
+
+
 }
 
 // TODO: Create a fortress colidable, with health

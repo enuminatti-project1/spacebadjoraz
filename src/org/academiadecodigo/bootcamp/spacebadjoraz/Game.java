@@ -56,7 +56,6 @@ public class Game {
     private Text plHealthText;
     private Text enNameText;
     private Text enHealthText;
-    private Rectangle introBackground;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -132,28 +131,13 @@ public class Game {
         updateShipInfo(enemy);
         updateShipInfo(player);
 
-        this.introBackground = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
-        introBackground.setColor(Color.BLACK);
-        introBackground.fill();
     }
-
-    public void gameIntro() throws InterruptedException {
-        Picture p = new Picture(PADDING, PADDING, "resources/gameintro.jpg");
-        p.draw();
-
-        Thread.sleep(7000);
-
-        introBackground.delete();
-        p.delete();
-    }
-
 
     /**
      * The game loop
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
-        gameIntro();
         while (enemy != null && player != null) {
             enemy.move();
             player.move();

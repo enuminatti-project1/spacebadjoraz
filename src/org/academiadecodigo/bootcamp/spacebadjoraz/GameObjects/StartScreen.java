@@ -29,6 +29,16 @@ public class StartScreen implements KeyboardHandler {
             noStartScreen.draw();
             Thread.sleep(1000);
         }
+
+        startScreen.delete();
+        noStartScreen.delete();
+
+        Picture p = new Picture(10, 10, "resources/img/gameintro.jpg");
+        p.draw();
+
+        Thread.sleep(10000);
+
+        p.delete();
     }
 
     @Override

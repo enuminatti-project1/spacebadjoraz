@@ -8,6 +8,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -150,6 +151,8 @@ public class Game {
 
             Iterator<Bullet> bulletIterator = bullets.listIterator();
 
+            ArrayList<Bullet> bulletsToDestroy = new ArrayList<>();
+
             while (bulletIterator.hasNext() && enemy != null && player != null) {
                 Bullet b = bulletIterator.next();
                 b.move();
@@ -163,9 +166,11 @@ public class Game {
                 }
                 if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
                     b.getBullet().delete();
-                    bulletIterator.remove();
+                    bulletsToDestroy.add(b);
                 }
             }
+
+            bullets.removeAll(bulletsToDestroy);
 
             Thread.sleep(33);
 

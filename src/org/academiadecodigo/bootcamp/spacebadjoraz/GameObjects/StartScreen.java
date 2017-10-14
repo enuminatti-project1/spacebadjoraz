@@ -30,21 +30,21 @@ public class StartScreen implements KeyboardHandler {
             noStartScreen.draw();
             Thread.sleep(1000);
         }
-        keypressed=false;
+        keypressed = false;
+
         startScreen.delete();
         noStartScreen.delete();
 
         Picture p = new Picture(10, 10, "resources/img/gameintro.jpg");
         Picture p1 = new Picture(10, 10, "resources/img/gameintrotext.jpg");
 
-        p1.draw();
         while (!keypressed){
-            Thread.sleep(1000);
-            p1.delete();
-            p.draw();
-            Thread.sleep(1000);
             p1.draw();
             p.delete();
+            Thread.sleep(1800);
+            p1.delete();
+            p.draw();
+            Thread.sleep(200);
         }
     }
 

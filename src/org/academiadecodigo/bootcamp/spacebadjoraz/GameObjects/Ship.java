@@ -67,7 +67,8 @@ public abstract class Ship implements Movable, Shootable {
     }
 
     public String getPercentageHealth(){
-        return String.valueOf((int)(((double)health / (double)maxHealth) * 100));
+        int percentage = (int)(((double)health / (double)maxHealth) * 100);
+        return String.valueOf(percentage < 0 ? 0 : percentage) + "%";
     }
 
     public Text getTextName(){

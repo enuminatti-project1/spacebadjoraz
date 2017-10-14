@@ -124,10 +124,10 @@ public class Game {
 
         explosionsPic = new HashMap<>();
 
-        Picture playerShipHit = new Picture(0, 0, "resources/img/ferrao.jpg");
-        Picture playerShipExplosion = new Picture(0, 0, "resources/img/ferrao.jpg");
-        Picture enemyShipHit = new Picture(0, 0, "resources/img/ferrao.jpg");
-        Picture enemyShipExplosion = new Picture(0, 0, "resources/img/ferrao.jpg");
+        Picture playerShipHit = new Picture(0, 0, "resources/img/hit.png");
+        Picture playerShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
+        Picture enemyShipHit = new Picture(0, 0, "resources/img/hit.png");
+        Picture enemyShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
 
         ArrayList<Picture> playerExplosions = new ArrayList<>();
         playerExplosions.add(playerShipHit);

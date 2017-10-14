@@ -156,21 +156,22 @@ public class Game {
             while (bulletIterator.hasNext() && enemy != null && player != null) {
                 Bullet b = bulletIterator.next();
                 b.move();
-
                 for (Ship s : ships) {
                     if (b.getPosition().isInside(s.getPosition())) {
                         hit(s, b);
-                        bulletIterator.remove();
+                        bulletsToDestroy.add(b);
                         updateShipInfo(s);
                     }
                 }
                 if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
-                    b.getBullet().delete();
                     bulletsToDestroy.add(b);
                 }
             }
 
-            bullets.removeAll(bulletsToDestroy);
+            for (Bullet b : bulletsToDestroy) {
+                b.getBullet().delete();
+                bullets.remove(b);
+            }
 
             Thread.sleep(33);
 

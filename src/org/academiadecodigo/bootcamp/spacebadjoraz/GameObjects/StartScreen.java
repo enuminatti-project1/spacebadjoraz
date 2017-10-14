@@ -10,6 +10,7 @@ public class StartScreen implements KeyboardHandler {
 
     private boolean keypressed = false;
 
+
     public void start() throws InterruptedException {
         Keyboard key = new Keyboard(this);
         KeyboardEvent k = new KeyboardEvent();
@@ -29,15 +30,26 @@ public class StartScreen implements KeyboardHandler {
             noStartScreen.draw();
             Thread.sleep(1000);
         }
-
+        keypressed=false;
         startScreen.delete();
         noStartScreen.delete();
 
+
         Picture p = new Picture(10, 10, "resources/img/gameintro.jpg");
+        Picture p1 = new Picture(10, 10, "resources/img/gameintro(1).jpg");
+
         p.draw();
 
-        Thread.sleep(10000);
 
+
+        while (!keypressed){
+            p.draw();
+            Thread.sleep(1000);
+            p.delete();
+            p1.draw();
+            Thread.sleep(1000);
+            p1.delete();
+        }
         p.delete();
     }
 

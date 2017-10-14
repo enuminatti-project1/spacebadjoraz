@@ -2,13 +2,11 @@ package org.academiadecodigo.bootcamp.spacebadjoraz;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.graphics.Text;
+import org.academiadecodigo.simplegraphics.graphics.*;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -42,7 +40,7 @@ public class Game {
     /**
      * Contains the shapes/images of the Explosions
      */
-    private LinkedList<Ellipse> explosions;
+    private HashMap<String, ArrayList<Picture>> explosionsPic;
 
     /**
      * The background for the game
@@ -123,7 +121,24 @@ public class Game {
         ships.add(this.enemy);
 
         shootables.addAll(ships);
-        explosions = new LinkedList<>();
+
+        explosionsPic = new HashMap<>();
+
+        Picture playerShipHit = new Picture(0, 0, "resources/img/ferrao.jpg");
+        Picture playerShipExplosion = new Picture(0, 0, "resources/img/ferrao.jpg");
+        Picture enemyShipHit = new Picture(0, 0, "resources/img/ferrao.jpg");
+        Picture enemyShipExplosion = new Picture(0, 0, "resources/img/ferrao.jpg");
+
+        ArrayList<Picture> playerExplosions = new ArrayList<>();
+        playerExplosions.add(playerShipHit);
+        playerExplosions.add(playerShipExplosion);
+
+        ArrayList<Picture> enemyExplosions = new ArrayList<>();
+        enemyExplosions.add(enemyShipHit);
+        enemyExplosions.add(enemyShipExplosion);
+
+        explosionsPic.put("enemy", enemyExplosions);
+        explosionsPic.put("player", playerExplosions);
 
         enemy.getPic().draw();
         player.getPic().draw();
@@ -145,8 +160,10 @@ public class Game {
 
             getBullets();
 
-            for (Ellipse explosion : explosions) {
-                explosion.delete();
+            for (ArrayList<Picture> a : explosionsPic.values()) {
+                for (Picture p : a) {
+                    p.delete();
+                }
             }
 
             Iterator<Bullet> bulletIterator = bullets.listIterator();
@@ -267,8 +284,7 @@ public class Game {
         int health = shootable.hit(b.getBulletPower());
         b.getBullet().delete();
 
-        Position x = shootable.getPosition();
-        explosion(x);
+        explosion(shootable);
 
         // If the heath goes to zero kills the ship
         if (health <= 0) {
@@ -287,14 +303,30 @@ public class Game {
     /**
      * creates the explosion
      *
-     * @param pos
+     * @param ship
      */
-    public void explosion(Position pos) {
+    public void explosion(Ship ship) {
+        Position shipPos = ship.getPosition();
+        Picture explosion;
+        ArrayList<Picture> pics;
 
-        Ellipse explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
-        explosion.setColor(Color.ORANGE);
-        explosion.fill();
-        explosions.add(explosion);
+        switch (ship.getType()) {
+            case ENEMY:
+                pics = explosionsPic.get("enemy");
+                break;
+            default:
+                pics = explosionsPic.get("player");
+        }
+
+        if (ship.getHealth() > 0) {
+            explosion = pics.get(0);
+        } else {
+            explosion = pics.get(1);
+        }
+
+        explosion.translate(shipPos.getX() - explosion.getX(),
+                shipPos.getY() - explosion.getY());
+        explosion.draw();
     }
 
     /**

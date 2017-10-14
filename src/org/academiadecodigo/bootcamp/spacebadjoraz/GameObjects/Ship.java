@@ -22,6 +22,7 @@ public abstract class Ship implements Movable, Shootable {
     private String name;
     private Text textName;
     private Text textHealth;
+    private ShipType type;
 
     public Ship(Rectangle ship, Position gameLimits,
                 int speed, int health, ShipType type,
@@ -39,6 +40,7 @@ public abstract class Ship implements Movable, Shootable {
         pic.delete();
         this.textName = new Text(0,0,this.name);
         this.textHealth =  new Text(0,0,String.valueOf(getPercentageHealth()) + " %");
+        this.type = type;
     }
 
     /**
@@ -53,7 +55,11 @@ public abstract class Ship implements Movable, Shootable {
         return pic;
     }
 
-    public void setPic(int x ,int y, String picPath) {
+    public ShipType getType() {
+        return type;
+    }
+
+    public void setPic(int x , int y, String picPath) {
         this.pic = new Picture(x, y, picPath);
         pic.draw();
     }

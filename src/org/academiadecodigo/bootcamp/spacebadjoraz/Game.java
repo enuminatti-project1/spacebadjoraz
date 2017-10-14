@@ -135,7 +135,7 @@ public class Game {
     }
 
     public void gameIntro() throws InterruptedException {
-        Picture p = new Picture(PADDING, PADDING, "resources/NewProject.jpg");
+        Picture p = new Picture(PADDING, PADDING, "resources/gameintro.jpg");
         p.draw();
 
         Thread.sleep(7000);

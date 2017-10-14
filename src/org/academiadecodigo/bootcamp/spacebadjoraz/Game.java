@@ -39,10 +39,9 @@ public class Game {
     private LinkedList<Bullet> bullets = new LinkedList<>();
 
     /**
-     * Contain the shape/ image of the Explosions
+     * Contains the shapes/images of the Explosions
      */
-
-    private Ellipse explosion;
+    private LinkedList<Ellipse> explosions;
 
     /**
      * The background for the game
@@ -110,7 +109,7 @@ public class Game {
 
         this.player = new PlayerShip(gameLimits);
 
-        for(ShipFactory.Level enemy : ShipFactory.Level.values()){
+        for (ShipFactory.Level enemy : ShipFactory.Level.values()) {
             enemies.add(ShipFactory.createEnemy(gameLimits, enemy));
         }
 
@@ -120,6 +119,7 @@ public class Game {
         ships.add(this.enemy);
 
         shootables.addAll(ships);
+        explosions = new LinkedList<>();
 
         enemy.getPic().draw();
         player.getPic().draw();
@@ -135,13 +135,13 @@ public class Game {
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
-        while (enemy != null && player !=null) {
+        while (enemy != null && player != null) {
             enemy.move();
             player.move();
 
             getBullets();
 
-            if (explosion != null) {
+            for (Ellipse explosion : explosions) {
                 explosion.delete();
             }
 
@@ -151,7 +151,7 @@ public class Game {
                 Bullet b = bulletIterator.next();
                 b.move();
 
-                for(Ship s : ships  ){
+                for (Ship s : ships) {
                     if (b.getPosition().isInside(s.getPosition())) {
                         hit(s, b);
                         bulletIterator.remove();
@@ -166,7 +166,7 @@ public class Game {
 
             Thread.sleep(33);
 
-            if (enemy == null){
+            if (enemy == null) {
                 if (!enemies.isEmpty()) {
                     Thread.sleep(1000);
                     enemy = enemies.removeFirst();
@@ -179,10 +179,9 @@ public class Game {
         }
 
 
-
-        //Player loose
-        if (player == null){
-            Text t = new Text(400, 300, "YOU LOOSE!");
+        //Player lose
+        if (player == null) {
+            Text t = new Text(400, 300, "YOU LOSE!");
             t.grow(50, 50);
             t.setColor(Color.RED);
             t.draw();
@@ -230,8 +229,7 @@ public class Game {
                 Bullet newBullet = shootable.getBullet();
                 newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
-            }
-            catch (NoBullet ignored) {
+            } catch (NoBullet ignored) {
             }
         }
 
@@ -252,6 +250,7 @@ public class Game {
 
     /**
      * Deletes the bullet on impact and call the method to make the explosion
+     *
      * @param shootable
      * @param b
      */
@@ -263,8 +262,8 @@ public class Game {
         explosion(x);
 
         // If the heath goes to zero kills the ship
-        if(health <= 0) {
-            if (shootable instanceof PlayerShip){
+        if (health <= 0) {
+            if (shootable instanceof PlayerShip) {
                 player = null;
                 return;
             }
@@ -278,20 +277,23 @@ public class Game {
 
     /**
      * creates the explosion
+     *
      * @param pos
      */
     public void explosion(Position pos) {
 
-        explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
+        Ellipse explosion = new Ellipse(pos.getX(), pos.getY(), 50, 50);
         explosion.setColor(Color.ORANGE);
         explosion.fill();
+        explosions.add(explosion);
     }
 
     /**
      * Update the ships info on the sides of the screen
+     *
      * @param ship The ship to update the information
      */
-    public void updateShipInfo(Ship ship){
+    public void updateShipInfo(Ship ship) {
 
         if (ship instanceof PlayerShip) {
             plNameText.setText(ship.getName());
@@ -307,7 +309,7 @@ public class Game {
 
     }
 
-    private void setShipInfo(){
+    private void setShipInfo() {
 
         plNameText = player.getTextName();
         plNameText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 100);

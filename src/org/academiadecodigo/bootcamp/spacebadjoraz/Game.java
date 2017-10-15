@@ -352,19 +352,6 @@ public class Game {
     }
 
     /**
-     * Find out if a certain position is still within the game limits
-     *
-     * @param pos Position to check
-     * @return True if Position is still inside the game limits
-     */
-    public boolean insideGame(Position pos) {
-        return gameLimits.getX() <= pos.getX() &&
-                gameLimits.getMaxX() >= pos.getMaxX() &&
-                gameLimits.getY() <= pos.getY() &&
-                gameLimits.getMaxY() >= pos.getMaxY();
-    }
-
-    /**
      * Deletes the bullet on impact and call the method to make the explosion
      *
      * @param shootable

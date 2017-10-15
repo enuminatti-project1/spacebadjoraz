@@ -202,25 +202,27 @@ public class Game {
 
             if (enemy == null) {
                 if (!enemies.isEmpty()) {
+                    enemy = enemies.removeFirst();
+
                     // death sounds
                     switch (enemy.getName()) {
-                        case "Filipe":
-                            // filipe death sound
-                            break;
                         case "Pedro":
-                            // brighenti death sound
+                            soundsMap.get(GameSound.FILIPEDEATH).play(true);
                             break;
                         case "Jorge":
-                            // jorge death sound
+                            soundsMap.get(GameSound.BRIGHENTIDEATH).play(true);
                             break;
                         case "Catarina":
-                            // catarina death sound
+                            soundsMap.get(GameSound.JORGEDEATH).play(true);
+                            break;
+                        case "Ferrão":
+                            soundsMap.get(GameSound.CATARINADEATH).play(true);
                             break;
                         default:
                     }
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
 
-                    enemy = enemies.removeFirst();
+
                     enemy.getPic().draw();
 
                     // intro sounds and bgms start
@@ -230,12 +232,17 @@ public class Game {
                             break;
                         case "Jorge":
                             // jorge intro
+                            soundsMap.get(GameSound.BGM).stop();
+                            soundsMap.get(GameSound.JORGEINTRO).play(true);
                             break;
                         case "Catarina":
                             // catarina intro
+                            soundsMap.get(GameSound.CATARINAINTRO).play(true);
                             break;
                         case "Ferrão":
                             // ferrao intro
+                            soundsMap.get(GameSound.BGMJORGE).stop();
+                            soundsMap.get(GameSound.FERRAOINTRO).play(true);
                             break;
                         default:
                     }
@@ -248,11 +255,9 @@ public class Game {
                     // bgm
                     switch (enemy.getName()) {
                         case "Jorge":
-                            soundsMap.get(GameSound.BGM).stop();
                             soundsMap.get(GameSound.BGMJORGE).loopIndef();
                             break;
                         case "Ferrão":
-                            soundsMap.get(GameSound.BGMJORGE).stop();
                             soundsMap.get(GameSound.FERRAOBGM).loopIndef();
                             break;
                         default:

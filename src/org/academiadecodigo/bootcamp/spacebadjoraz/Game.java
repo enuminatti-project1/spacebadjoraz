@@ -153,7 +153,6 @@ public class Game {
         updateShipInfo(player);
 
         createGameSounds();
-        soundsMap.get(GameSound.BGM).loopIndef();
     }
 
     /**
@@ -162,6 +161,7 @@ public class Game {
      */
     public void play() throws InterruptedException {
         soundsMap.get(GameSound.FILIPEINTRO).play(true);
+        soundsMap.get(GameSound.BGM).loopIndef();
         while (enemy != null && player != null) {
             enemy.move();
             player.move();
@@ -229,24 +229,27 @@ public class Game {
                     switch (enemy.getName()) {
                         case "Pedro":
                             soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
+                            Thread.sleep(2000);
                             break;
                         case "Jorge":
                             // jorge intro
                             soundsMap.get(GameSound.BGM).stop();
                             soundsMap.get(GameSound.JORGEINTRO).play(true);
+                            Thread.sleep(800);
                             break;
                         case "Catarina":
                             // catarina intro
                             soundsMap.get(GameSound.CATARINAINTRO).play(true);
+                            Thread.sleep(700);
                             break;
                         case "Ferrão":
                             // ferrao intro
                             soundsMap.get(GameSound.BGMJORGE).stop();
                             soundsMap.get(GameSound.FERRAOINTRO).play(true);
+                            Thread.sleep(1500);
                             break;
                         default:
                     }
-                    Thread.sleep(2000);
 
                     ships.add(enemy);
                     shootables.add(enemy);
@@ -321,18 +324,29 @@ public class Game {
                 Bullet newBullet = shootable.getBullet();
                 newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
+                Sound newSound = soundsMap.get(GameSound.ENEMYBULLET);
                 if (shootable instanceof EnemyShip &&
-                        !soundsMap.get(GameSound.ENEMYBULLET).isPlaying()) {
-                    soundsMap.get(GameSound.ENEMYBULLET).play(true);
-                } else if (shootable instanceof PlayerShip &&
-                        !soundsMap.get(GameSound.PEW).isPlaying()) {
-                    soundsMap.get(GameSound.PEW).play(true);
-
+                        ((EnemyShip) shootable).getName().equals("Catarina")) {
+                    Sound[] randomSounds = new Sound[]{
+                            soundsMap.get(GameSound.CATARINAINTRO),
+                            soundsMap.get(GameSound.BALELE),
+                            soundsMap.get(GameSound.UNDERNIGHT)
+                    };
+                    newSound = randomSounds[(int) (Math.random() * randomSounds.length)];
+                } else if (shootable instanceof PlayerShip) {
+                    newSound = soundsMap.get(GameSound.PEW);
                 }
+                playIfNotPlaying(newSound);
             } catch (NoBullet ignored) {
             }
         }
 
+    }
+
+    public void playIfNotPlaying(Sound clip) {
+        if (!clip.isPlaying()) {
+            clip.play(true);
+        }
     }
 
     /**
@@ -464,7 +478,9 @@ public class Game {
         CATARINADEATH("catarinadeath"),
         FERRAOINTRO("ferraointro"),
         ENEMYBULLET("pah"),
-        WIN("ohnaosei");
+        WIN("ohnaosei"),
+        BALELE("balele"),
+        UNDERNIGHT("undernight");
 
         private String name;
 

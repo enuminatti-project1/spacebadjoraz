@@ -1,8 +1,11 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
+import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
-import org.academiadecodigo.simplegraphics.graphics.*;
+import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.ArrayList;
@@ -41,6 +44,8 @@ public class Game {
      * Contains the shapes/images of the Explosions
      */
     private HashMap<String, ArrayList<Picture>> explosionsPic;
+
+    private HashMap<GameSound, Sound> soundsMap;
 
     /**
      * The background for the game
@@ -147,6 +152,8 @@ public class Game {
         updateShipInfo(enemy);
         updateShipInfo(player);
 
+        createGameSounds();
+        soundsMap.get(GameSound.BGM).loopIndef();
     }
 
     /**
@@ -154,6 +161,7 @@ public class Game {
      * It runs until there's no enemies.
      */
     public void play() throws InterruptedException {
+        soundsMap.get(GameSound.FILIPEINTRO).play(true);
         while (enemy != null && player != null) {
             enemy.move();
             player.move();
@@ -196,6 +204,12 @@ public class Game {
                 if (!enemies.isEmpty()) {
                     Thread.sleep(1000);
                     enemy = enemies.removeFirst();
+                    if (enemy.getName().equals("Pedro")) {
+                        soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
+                    } else if (enemy.getName().equals("Ferrão")) {
+                        soundsMap.get(GameSound.BGM).stop();
+                        soundsMap.get(GameSound.FERRAOBGM).loopIndef();
+                    }
                     enemy.getPic().draw();
                     ships.add(enemy);
                     shootables.add(enemy);
@@ -204,6 +218,8 @@ public class Game {
             }
         }
 
+        soundsMap.get(GameSound.BGM).stop();
+        soundsMap.get(GameSound.FERRAOBGM).stop();
 
         //Player lose
         if (player == null) {
@@ -211,6 +227,7 @@ public class Game {
             t.grow(50, 50);
             t.setColor(Color.RED);
             t.draw();
+            soundsMap.get(GameSound.LOSS).play(true);
             while (true) {
                 if (t.getWidth() > background.getWidth() ||
                         t.getHeight() > background.getHeight()) {
@@ -228,6 +245,7 @@ public class Game {
         t.grow(50, 50);
         t.setColor(Color.GREEN);
         t.draw();
+        soundsMap.get(GameSound.WIN).play(true);
         while (true) {
             if (t.getWidth() > background.getWidth() ||
                     t.getHeight() > background.getHeight()) {
@@ -313,9 +331,11 @@ public class Game {
         switch (ship.getType()) {
             case ENEMY:
                 pics = explosionsPic.get("enemy");
+                soundsMap.get(GameSound.PEW).play(true);
                 break;
             default:
                 pics = explosionsPic.get("player");
+                soundsMap.get(GameSound.ENEMYBULLET).play(true);
         }
 
         if (ship.getHealth() > 0) {
@@ -372,6 +392,34 @@ public class Game {
         enHealthText.grow(0, 5);
         enHealthText.setColor(Color.WHITE);
 
+    }
+
+    private enum GameSound {
+        BGM("imperial"),
+        FERRAOBGM("sephirothalterado"),
+        PEW("piu"),
+        LOSS("burro"),
+        BRIGHENTIINTRO("nadamaisnadamenos"),
+        FILIPEINTRO("ehpah"),
+        ENEMYBULLET("pah"),
+        WIN("ohnaosei");
+
+        private String name;
+
+        GameSound(String name) {
+            this.name = name;
+        }
+
+        public String getPath() {
+            return "/resources/sound/" + this.name + ".wav";
+        }
+    }
+
+    private void createGameSounds() {
+        soundsMap = new HashMap<>();
+        for (GameSound sound : GameSound.values()) {
+            soundsMap.put(sound, new Sound(sound.getPath()));
+        }
     }
 
 

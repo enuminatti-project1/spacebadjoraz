@@ -222,7 +222,7 @@ public class Game {
                             break;
                         default:
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(1200);
 
 
                     enemy.getPic().draw();
@@ -289,7 +289,7 @@ public class Game {
                 t.grow(10, 10);
                 Thread.sleep(33);
             }
-            Thread.sleep(500);
+            Thread.sleep(1000);
             System.exit(0);
         }
 
@@ -307,7 +307,7 @@ public class Game {
             t.grow(10, 10);
             Thread.sleep(33);
         }
-        Thread.sleep(500);
+        Thread.sleep(1000);
         System.exit(0);
     }
 

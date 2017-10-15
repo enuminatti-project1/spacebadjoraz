@@ -328,7 +328,7 @@ public class Game {
                 if (shootable instanceof EnemyShip &&
                         ((EnemyShip) shootable).getName().equals("Catarina")) {
                     Sound[] randomSounds = new Sound[]{
-                            soundsMap.get(GameSound.CATARINAINTRO),
+                            soundsMap.get(GameSound.BADJORAZ),
                             soundsMap.get(GameSound.BALELE),
                             soundsMap.get(GameSound.UNDERNIGHT)
                     };
@@ -480,7 +480,8 @@ public class Game {
         ENEMYBULLET("pah"),
         WIN("ohnaosei"),
         BALELE("balele"),
-        UNDERNIGHT("undernight");
+        UNDERNIGHT("undernight"),
+        BADJORAZ("badjoraz");
 
         private String name;
 

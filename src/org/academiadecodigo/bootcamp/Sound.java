@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class Sound {
+public class Sound implements Runnable{
 
     private Clip clip;
     private URL soundURL;
@@ -99,5 +99,10 @@ public class Sound {
                 e1.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void run() {
+        play(true);
     }
 }

@@ -60,6 +60,8 @@ public class Game {
     private Text plHealthText;
     private Text enNameText;
     private Text enHealthText;
+    private Text plBulletPower;
+    private Text enBulletPower;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -425,15 +427,19 @@ public class Game {
     public void updateShipInfo(Ship ship) {
 
         if (ship instanceof PlayerShip) {
-            plNameText.setText(ship.getName());
+            plNameText.setText("Name: " + ship.getName());
             plNameText.draw();
-            plHealthText.setText(ship.getPercentageHealth());
+            plHealthText.setText("Health: " + ship.getPercentageHealth());
             plHealthText.draw();
+            plBulletPower.setText("Bullet Power: " + String.valueOf(ship.getBulletPower()));
+            plBulletPower.draw();
         } else {
-            enHealthText.setText(ship.getPercentageHealth());
+            enHealthText.setText("Health: " + ship.getPercentageHealth());
             enHealthText.draw();
-            enNameText.setText(ship.getName());
+            enNameText.setText("Name: " + ship.getName());
             enNameText.draw();
+            enBulletPower.setText("Bullet Power: " + String.valueOf(ship.getBulletPower()));
+            enBulletPower.draw();
         }
 
     }
@@ -441,57 +447,36 @@ public class Game {
     private void setShipInfo() {
 
         plNameText = player.getTextName();
-        plNameText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 100);
+        plNameText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 140);
         plNameText.grow(0, 6);
         plNameText.setColor(Color.RED);
 
         plHealthText = player.getTextHealth();
-        plHealthText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 60);
+        plHealthText.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 100);
         plHealthText.grow(0, 5);
         plHealthText.setColor(Color.WHITE);
 
+        plBulletPower = player.getTextBulletPower();
+        plBulletPower.translate(playerInfo.getX() + 10, playerInfo.getHeight() + playerInfo.getY() - 60);
+        plBulletPower.grow(0, 5);
+        plBulletPower.setColor(Color.WHITE);
+
+
         enNameText = enemy.getTextName();
-        enNameText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 100);
+        enNameText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 140);
         enNameText.grow(0, 6);
         enNameText.setColor(Color.RED);
 
         enHealthText = enemy.getTextHealth();
-        enHealthText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 60);
+        enHealthText.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 100);
         enHealthText.grow(0, 5);
         enHealthText.setColor(Color.WHITE);
 
-    }
+        enBulletPower = enemy.getTextBulletPower();
+        enBulletPower.translate(enemyInfo.getX() + 10, enemyInfo.getHeight() + enemyInfo.getY() - 60);
+        enBulletPower.grow(0, 5);
+        enBulletPower.setColor(Color.WHITE);
 
-    private enum GameSound {
-        BGM("tank"),
-        BGMJORGE("imperial"),
-        FERRAOBGM("sephirothalterado"),
-        PEW("piu"),
-        LOSS("burro"),
-        FILIPEINTRO("ehpah"),
-        FILIPEDEATH("filipedeath"),
-        BRIGHENTIINTRO("brighentiintro"),
-        BRIGHENTIDEATH("brighentideath"),
-        JORGEINTRO("jorgeintro"),
-        JORGEDEATH("jorgedeath"),
-        CATARINAINTRO("catarinaintro"),
-        CATARINADEATH("catarinadeath"),
-        FERRAOINTRO("ferraointro"),
-        ENEMYBULLET("pah"),
-        WIN("ohnaosei"),
-        BALELE("balele"),
-        UNDERNIGHT("undernight"),
-        BADJORAZ("badjoraz");
-
-        private String name;
-
-        GameSound(String name) {
-            this.name = name;
-        }
-
-        public String getPath() {
-            return "/resources/sound/" + this.name + ".wav";
-        }
     }
 
     private void createGameSounds() {
@@ -500,8 +485,6 @@ public class Game {
             soundsMap.put(sound, new Sound(sound.getPath()));
         }
     }
-
-
 }
 
 // TODO: Create a fortress colidable, with health

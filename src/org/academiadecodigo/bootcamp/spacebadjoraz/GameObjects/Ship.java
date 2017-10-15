@@ -22,6 +22,7 @@ public abstract class Ship implements Movable, Shootable {
     private String name;
     private Text textName;
     private Text textHealth;
+    private Text textBulletPower;
     private ShipType type;
 
     public Ship(Rectangle ship, Position gameLimits,
@@ -38,8 +39,9 @@ public abstract class Ship implements Movable, Shootable {
         this.bulletPower = bulletPower;
         setPic(ship.getX(), ship.getY(), picPath);
         pic.delete();
-        this.textName = new Text(0,0,this.name);
-        this.textHealth =  new Text(0,0,String.valueOf(getPercentageHealth()) + " %");
+        this.textName = new Text(0,0,"Name: " + this.name);
+        this.textHealth =  new Text(0,0,"Health: " + String.valueOf(getPercentageHealth()) + " %");
+        this.textBulletPower = new Text(0,0,"Bullet Power: " + String.valueOf(bulletPower));
         this.type = type;
     }
 
@@ -83,6 +85,10 @@ public abstract class Ship implements Movable, Shootable {
 
     public Text getTextHealth(){
         return textHealth;
+    }
+
+    public Text getTextBulletPower() {
+        return textBulletPower;
     }
 
     @Override

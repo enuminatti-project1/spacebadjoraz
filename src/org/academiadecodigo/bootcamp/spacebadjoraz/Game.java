@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz;
 
-import com.sun.xml.internal.txw2.DatatypeWriter;
 import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
 import org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects.*;
@@ -322,18 +321,31 @@ public class Game {
                 Bullet newBullet = shootable.getBullet();
                 newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
-                if (shootable instanceof EnemyShip) {
-                    playSound(GameSound.ENEMYBULLET.getPath());
-                    //soundsMap.get(GameSound.ENEMYBULLET).play(true);
-                } else if (shootable instanceof PlayerShip) {
-                    playSound(GameSound.PEW.getPath());
-                    //soundsMap.get(GameSound.PEW).play(true);
+                if (shootable instanceof EnemyShip &&
+                        !soundsMap.get(GameSound.ENEMYBULLET).isPlaying()) {
+                    soundsMap.get(GameSound.ENEMYBULLET).play(true);
+                } else if (shootable instanceof PlayerShip &&
+                        !soundsMap.get(GameSound.PEW).isPlaying()) {
+                    soundsMap.get(GameSound.PEW).play(true);
 
                 }
             } catch (NoBullet ignored) {
             }
         }
 
+    }
+
+    /**
+     * Find out if a certain position is still within the game limits
+     *
+     * @param pos Position to check
+     * @return True if Position is still inside the game limits
+     */
+    public boolean insideGame(Position pos) {
+        return gameLimits.getX() <= pos.getX() &&
+                gameLimits.getMaxX() >= pos.getMaxX() &&
+                gameLimits.getY() <= pos.getY() &&
+                gameLimits.getMaxY() >= pos.getMaxY();
     }
 
     /**
@@ -472,11 +484,6 @@ public class Game {
         }
     }
 
-    private void playSound(String sPath){
-        Sound s = new Sound(sPath);
-        Thread t = new Thread(s);
-        t.start();
-    }
 
 }
 

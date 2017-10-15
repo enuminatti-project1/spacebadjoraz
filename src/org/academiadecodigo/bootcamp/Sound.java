@@ -37,6 +37,10 @@ public class Sound {
         clip.close();
     }
 
+    public boolean isPlaying() {
+        return clip.isActive();
+    }
+
     public int getLength() {
         return clip.getFrameLength();
     }

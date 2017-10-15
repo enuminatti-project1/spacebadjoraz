@@ -273,6 +273,14 @@ public class Game {
                 Bullet newBullet = shootable.getBullet();
                 newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
+                if (shootable instanceof EnemyShip &&
+                        !soundsMap.get(GameSound.ENEMYBULLET).isPlaying()) {
+                    soundsMap.get(GameSound.ENEMYBULLET).play(true);
+                } else if (shootable instanceof PlayerShip &&
+                        !soundsMap.get(GameSound.PEW).isPlaying()) {
+                    soundsMap.get(GameSound.PEW).play(true);
+
+                }
             } catch (NoBullet ignored) {
             }
         }
@@ -331,11 +339,9 @@ public class Game {
         switch (ship.getType()) {
             case ENEMY:
                 pics = explosionsPic.get("enemy");
-                soundsMap.get(GameSound.PEW).play(true);
                 break;
             default:
                 pics = explosionsPic.get("player");
-                soundsMap.get(GameSound.ENEMYBULLET).play(true);
         }
 
         if (ship.getHealth() > 0) {
@@ -395,7 +401,8 @@ public class Game {
     }
 
     private enum GameSound {
-        BGM("imperial"),
+        BGM("tank"),
+        BGMJORGE("imperial"),
         FERRAOBGM("sephirothalterado"),
         PEW("piu"),
         LOSS("burro"),

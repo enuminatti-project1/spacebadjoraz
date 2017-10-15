@@ -8,9 +8,9 @@ public class ShipFactory {
 
     public enum Level{
         ONE("Filipe", "resources/img/filipe.jpg", 20, 1),
-        TWO("Pedro", "resources/img/pedro.jpg", 40,2),
+        TWO("Pedro", "resources/img/brighenti.png", 40,2),
         TREE("Jorge", "resources/img/jorge.jpg", 60,3),
-        FOUR("Catarina", "resources/img/catarina.jpg",100,4),
+        FOUR("Catarina", "resources/img/catarina.png",100,4),
         FIVE("Ferrão","resources/img/ferrao.jpg",250,20);
 
         private String name;

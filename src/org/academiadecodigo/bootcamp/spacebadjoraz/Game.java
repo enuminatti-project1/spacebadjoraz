@@ -170,20 +170,20 @@ public class Game {
 
             ArrayList<Bullet> bulletsToDestroy = new ArrayList<>();
 
-            while (bulletIterator.hasNext() && enemy != null && player != null) {
-                Bullet b = bulletIterator.next();
-                b.move();
-                for (Ship s : ships) {
-                    if (b.getPosition().isInside(s.getPosition())) {
-                        hit(s, b);
+                while (bulletIterator.hasNext() && enemy != null && player != null) {
+                    Bullet b = bulletIterator.next();
+                    b.move();
+                    for (Ship s : ships) {
+                        if (b.getPosition().isInside(s.getPosition())) {
+                            hit(s, b);
+                            bulletsToDestroy.add(b);
+                            updateShipInfo(s);
+                        }
+                    }
+                    if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
                         bulletsToDestroy.add(b);
-                        updateShipInfo(s);
                     }
                 }
-                if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
-                    bulletsToDestroy.add(b);
-                }
-            }
 
             for (Bullet b : bulletsToDestroy) {
                 b.getBullet().delete();

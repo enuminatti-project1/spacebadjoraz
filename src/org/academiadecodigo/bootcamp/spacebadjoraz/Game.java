@@ -202,18 +202,61 @@ public class Game {
 
             if (enemy == null) {
                 if (!enemies.isEmpty()) {
-                    Thread.sleep(1000);
-                    enemy = enemies.removeFirst();
-                    if (enemy.getName().equals("Pedro")) {
-                        soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
-                    } else if (enemy.getName().equals("Ferrão")) {
-                        soundsMap.get(GameSound.BGM).stop();
-                        soundsMap.get(GameSound.FERRAOBGM).loopIndef();
+                    // death sounds
+                    switch (enemy.getName()) {
+                        case "Filipe":
+                            // filipe death sound
+                            break;
+                        case "Pedro":
+                            // brighenti death sound
+                            break;
+                        case "Jorge":
+                            // jorge death sound
+                            break;
+                        case "Catarina":
+                            // catarina death sound
+                            break;
+                        default:
                     }
+                    Thread.sleep(2000);
+
+                    enemy = enemies.removeFirst();
                     enemy.getPic().draw();
+
+                    // intro sounds and bgms start
+                    switch (enemy.getName()) {
+                        case "Pedro":
+                            soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
+                            break;
+                        case "Jorge":
+                            // jorge intro
+                            break;
+                        case "Catarina":
+                            // catarina intro
+                            break;
+                        case "Ferrão":
+                            // ferrao intro
+                            break;
+                        default:
+                    }
+                    Thread.sleep(2000);
+
                     ships.add(enemy);
                     shootables.add(enemy);
                     updateShipInfo(enemy);
+
+                    // bgm
+                    switch (enemy.getName()) {
+                        case "Jorge":
+                            soundsMap.get(GameSound.BGM).stop();
+                            soundsMap.get(GameSound.BGMJORGE).loopIndef();
+                            break;
+                        case "Ferrão":
+                            soundsMap.get(GameSound.BGMJORGE).stop();
+                            soundsMap.get(GameSound.FERRAOBGM).loopIndef();
+                            break;
+                        default:
+                    }
                 }
             }
         }
@@ -406,8 +449,15 @@ public class Game {
         FERRAOBGM("sephirothalterado"),
         PEW("piu"),
         LOSS("burro"),
-        BRIGHENTIINTRO("nadamaisnadamenos"),
         FILIPEINTRO("ehpah"),
+        FILIPEDEATH("filipedeath"),
+        BRIGHENTIINTRO("brighentiintro"),
+        BRIGHENTIDEATH("brighentideath"),
+        JORGEINTRO("jorgeintro"),
+        JORGEDEATH("jorgedeath"),
+        CATARINAINTRO("catarinaintro"),
+        CATARINADEATH("catarinadeath"),
+        FERRAOINTRO("ferraointro"),
         ENEMYBULLET("pah"),
         WIN("ohnaosei");
 

@@ -83,6 +83,17 @@ public class Sound {
 
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
             System.out.println(ex.getMessage());
+        } catch (IllegalArgumentException e){ //Pulse audio em linux
+            try {
+                inputStream = AudioSystem.getAudioInputStream(new File(path));
+                AudioFormat format = inputStream.getFormat();
+                DataLine.Info info = new DataLine.Info(Clip.class, format);
+                clip = (Clip) AudioSystem.getLine(info);
+                clip.open(inputStream);
+                //clip.start();
+            }catch (LineUnavailableException | UnsupportedAudioFileException | IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 }

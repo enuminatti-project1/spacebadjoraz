@@ -5,7 +5,7 @@ Filipe Paiz - @nick<br>
 Francisco Xalana - @nick<br>
 João Alves - @nick<br>
 Ricardo Constantino - @wiiaboo<br>
-Samuel Laço - @nick<br>
+Samuel Laço - @SamLaco<br>
 
 Project developed during the 6th week of Academia de Código's 11th bootcamp (ENUMinatti)<br>
 

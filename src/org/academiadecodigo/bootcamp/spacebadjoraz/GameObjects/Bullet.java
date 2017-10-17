@@ -12,16 +12,12 @@ public class Bullet implements Movable {
     private final int bulletPower;
     /**
      * Speed the bullet travels at.
-     *
-     * TODO: different bullets could move at different speeds
      */
     private int speed;
     private Position limits;
 
     /**
      * Direction the bullet travels to.
-     *
-     * TODO: bullets can move diagonally
      */
     private boolean shootUp;
 

@@ -21,7 +21,6 @@ public interface Shootable {
      */
     void stopShooting();
 
-
     /**
      * If something is shooting this retrieves the bullet shot.
      *

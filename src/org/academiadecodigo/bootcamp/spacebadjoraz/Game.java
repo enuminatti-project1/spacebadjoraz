@@ -50,7 +50,6 @@ public class Game {
     /**
      * The background for the game
      */
-    private Rectangle canvas;
     private Rectangle background;
     private Rectangle playerInfo;
     private Rectangle enemyInfo;
@@ -79,14 +78,15 @@ public class Game {
      *
      * @param args
      */
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Game game = new Game();
-        game.init();
-        game.play();
-    }
-
-    public Game() {
-
+        try {
+            game.init();
+            game.play();
+        } catch (InterruptedException e) {
+            System.err.println("Something went wrong.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -97,7 +97,7 @@ public class Game {
         StartScreen s = new StartScreen();
         s.start();
 
-        canvas = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
+        Rectangle canvas = new Rectangle(PADDING, PADDING, WIDTH, HEIGHT);
         canvas.draw();
 
         background = new Rectangle(PADDING + PL_WIDTH, PADDING, WIDTH - PL_WIDTH - EN_WIDTH, HEIGHT);
@@ -129,23 +129,7 @@ public class Game {
 
         shootables.addAll(ships);
 
-        explosionsPic = new HashMap<>();
-
-        Picture playerShipHit = new Picture(0, 0, "resources/img/hit.png");
-        Picture playerShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
-        Picture enemyShipHit = new Picture(0, 0, "resources/img/hit.png");
-        Picture enemyShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
-
-        ArrayList<Picture> playerExplosions = new ArrayList<>();
-        playerExplosions.add(playerShipHit);
-        playerExplosions.add(playerShipExplosion);
-
-        ArrayList<Picture> enemyExplosions = new ArrayList<>();
-        enemyExplosions.add(enemyShipHit);
-        enemyExplosions.add(enemyShipExplosion);
-
-        explosionsPic.put("enemy", enemyExplosions);
-        explosionsPic.put("player", playerExplosions);
+        createExplosions();
 
         enemy.getPic().draw();
         player.getPic().draw();
@@ -164,6 +148,7 @@ public class Game {
     public void play() throws InterruptedException {
         soundsMap.get(GameSound.FILIPEINTRO).play(true);
         soundsMap.get(GameSound.BGM).loopIndef();
+
         while (enemy != null && player != null) {
             enemy.move();
             player.move();
@@ -176,98 +161,27 @@ public class Game {
                 }
             }
 
-            Iterator<Bullet> bulletIterator = bullets.listIterator();
-
-            ArrayList<Bullet> bulletsToDestroy = new ArrayList<>();
-
-                while (bulletIterator.hasNext() && enemy != null && player != null) {
-                    Bullet b = bulletIterator.next();
-                    b.move();
-                    for (Ship s : ships) {
-                        if (b.getPosition().isInside(s.getPosition())) {
-                            hit(s, b);
-                            bulletsToDestroy.add(b);
-                            updateShipInfo(s);
-                        }
-                    }
-                    if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
-                        bulletsToDestroy.add(b);
-                    }
-                }
-
-            for (Bullet b : bulletsToDestroy) {
-                b.getBullet().delete();
-                bullets.remove(b);
-            }
+            checkBulletsCollision();
 
             Thread.sleep(33);
 
-            if (enemy == null) {
-                if (!enemies.isEmpty()) {
-                    enemy = enemies.removeFirst();
+            if (enemy == null && !enemies.isEmpty()) {
+                enemy = enemies.removeFirst();
 
-                    // death sounds
-                    switch (enemy.getName()) {
-                        case "Pedro":
-                            soundsMap.get(GameSound.FILIPEDEATH).play(true);
-                            break;
-                        case "Jorge":
-                            soundsMap.get(GameSound.BRIGHENTIDEATH).play(true);
-                            break;
-                        case "Catarina":
-                            soundsMap.get(GameSound.JORGEDEATH).play(true);
-                            break;
-                        case "Ferrão":
-                            soundsMap.get(GameSound.CATARINADEATH).play(true);
-                            break;
-                        default:
-                    }
-                    Thread.sleep(1200);
+                // death sounds
+                throwDeathSounds();
 
+                enemy.getPic().draw();
 
-                    enemy.getPic().draw();
+                // intro sounds and bgms start
+                playIntros();
 
-                    // intro sounds and bgms start
-                    switch (enemy.getName()) {
-                        case "Pedro":
-                            soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
-                            Thread.sleep(2000);
-                            break;
-                        case "Jorge":
-                            // jorge intro
-                            soundsMap.get(GameSound.BGM).stop();
-                            soundsMap.get(GameSound.JORGEINTRO).play(true);
-                            Thread.sleep(800);
-                            break;
-                        case "Catarina":
-                            // catarina intro
-                            soundsMap.get(GameSound.CATARINAINTRO).play(true);
-                            Thread.sleep(700);
-                            break;
-                        case "Ferrão":
-                            // ferrao intro
-                            soundsMap.get(GameSound.BGMJORGE).stop();
-                            soundsMap.get(GameSound.FERRAOINTRO).play(true);
-                            Thread.sleep(1500);
-                            break;
-                        default:
-                    }
+                ships.add(enemy);
+                shootables.add(enemy);
+                updateShipInfo(enemy);
 
-                    ships.add(enemy);
-                    shootables.add(enemy);
-                    updateShipInfo(enemy);
-
-                    // bgm
-                    switch (enemy.getName()) {
-                        case "Jorge":
-                            soundsMap.get(GameSound.BGMJORGE).loopIndef();
-                            break;
-                        case "Ferrão":
-                            soundsMap.get(GameSound.FERRAOBGM).loopIndef();
-                            break;
-                        default:
-                    }
-                }
+                // bgm
+                startBGMs();
             }
         }
 
@@ -276,24 +190,14 @@ public class Game {
 
         //Player lose
         if (player == null) {
-            Text t = new Text(400, 300, "YOU LOSE!");
-            t.grow(50, 50);
-            t.setColor(Color.RED);
-            t.draw();
-            soundsMap.get(GameSound.LOSS).play(true);
-            while (true) {
-                if (t.getWidth() > background.getWidth() ||
-                        t.getHeight() > background.getHeight()) {
-                    break;
-                }
-                t.grow(10, 10);
-                Thread.sleep(33);
-            }
-            Thread.sleep(1000);
-            System.exit(0);
+            playerLoses();
         }
 
         //Player win
+        playerWins();
+    }
+
+    private void playerWins() throws InterruptedException {
         Text t = new Text(400, 300, "YOU WIN!");
         t.grow(50, 50);
         t.setColor(Color.GREEN);
@@ -309,6 +213,108 @@ public class Game {
         }
         Thread.sleep(1000);
         System.exit(0);
+    }
+
+    private void playerLoses() throws InterruptedException {
+        Text t = new Text(400, 300, "YOU LOSE!");
+        t.grow(50, 50);
+        t.setColor(Color.RED);
+        t.draw();
+        soundsMap.get(GameSound.LOSS).play(true);
+        while (true) {
+            if (t.getWidth() > background.getWidth() ||
+                    t.getHeight() > background.getHeight()) {
+                break;
+            }
+            t.grow(10, 10);
+            Thread.sleep(33);
+        }
+        Thread.sleep(1000);
+        System.exit(0);
+    }
+
+    private void startBGMs() {
+        switch (enemy.getName()) {
+            case "Jorge":
+                soundsMap.get(GameSound.BGMJORGE).loopIndef();
+                break;
+            case "Ferrão":
+                soundsMap.get(GameSound.FERRAOBGM).loopIndef();
+                break;
+            default:
+        }
+    }
+
+    private void checkBulletsCollision() {
+        Iterator<Bullet> bulletIterator = bullets.listIterator();
+
+        ArrayList<Bullet> bulletsToDestroy = new ArrayList<>();
+
+        while (bulletIterator.hasNext() && enemy != null && player != null) {
+            Bullet b = bulletIterator.next();
+            b.move();
+            for (Ship s : ships) {
+                if (b.getPosition().isInside(s.getPosition())) {
+                    hit(s, b);
+                    bulletsToDestroy.add(b);
+                    updateShipInfo(s);
+                }
+            }
+            if (b.getPosition().isInside(gameLimits, b.getSpeed())) {
+                bulletsToDestroy.add(b);
+            }
+        }
+
+        for (Bullet b : bulletsToDestroy) {
+            b.getBullet().delete();
+            bullets.remove(b);
+        }
+    }
+
+    private void throwDeathSounds() throws InterruptedException {
+        switch (enemy.getName()) {
+            case "Pedro":
+                soundsMap.get(GameSound.FILIPEDEATH).play(true);
+                break;
+            case "Jorge":
+                soundsMap.get(GameSound.BRIGHENTIDEATH).play(true);
+                break;
+            case "Catarina":
+                soundsMap.get(GameSound.JORGEDEATH).play(true);
+                break;
+            case "Ferrão":
+                soundsMap.get(GameSound.CATARINADEATH).play(true);
+                break;
+            default:
+        }
+        Thread.sleep(1200);
+    }
+
+    private void playIntros() throws InterruptedException {
+        switch (enemy.getName()) {
+            case "Pedro":
+                soundsMap.get(GameSound.BRIGHENTIINTRO).play(true);
+                Thread.sleep(2000);
+                break;
+            case "Jorge":
+                // jorge intro
+                soundsMap.get(GameSound.BGM).stop();
+                soundsMap.get(GameSound.JORGEINTRO).play(true);
+                Thread.sleep(800);
+                break;
+            case "Catarina":
+                // catarina intro
+                soundsMap.get(GameSound.CATARINAINTRO).play(true);
+                Thread.sleep(700);
+                break;
+            case "Ferrão":
+                // ferrao intro
+                soundsMap.get(GameSound.BGMJORGE).stop();
+                soundsMap.get(GameSound.FERRAOINTRO).play(true);
+                Thread.sleep(1500);
+                break;
+            default:
+        }
     }
 
     /**
@@ -471,6 +477,26 @@ public class Game {
         for (GameSound sound : GameSound.values()) {
             soundsMap.put(sound, new Sound(sound.getPath()));
         }
+    }
+
+    private void createExplosions() {
+        explosionsPic = new HashMap<>();
+
+        Picture playerShipHit = new Picture(0, 0, "resources/img/hit.png");
+        Picture playerShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
+        Picture enemyShipHit = new Picture(0, 0, "resources/img/hit.png");
+        Picture enemyShipExplosion = new Picture(0, 0, "resources/img/explosion.png");
+
+        ArrayList<Picture> playerExplosions = new ArrayList<>();
+        playerExplosions.add(playerShipHit);
+        playerExplosions.add(playerShipExplosion);
+
+        ArrayList<Picture> enemyExplosions = new ArrayList<>();
+        enemyExplosions.add(enemyShipHit);
+        enemyExplosions.add(enemyShipExplosion);
+
+        explosionsPic.put("enemy", enemyExplosions);
+        explosionsPic.put("player", playerExplosions);
     }
 }
 

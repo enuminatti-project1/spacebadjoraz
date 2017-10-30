@@ -1,9 +1,9 @@
 # Space Badjoraz
 
 ## Authors
-Filipe Paiz - @nick<br>
-Francisco Xalana - @nick<br>
-João Alves - @nick<br>
+Filipe Paiz - @FilipePaiz<br>
+Francisco Xalana - @FXalana<br>
+João Alves - @Alvesjb<br>
 Ricardo Constantino - @wiiaboo<br>
 Samuel Laço - @SamLaco<br>
 

@@ -30,9 +30,11 @@ TODO: someone with more originality than me will write this
 
 ## Instructions to play
 
+<pre>
   W           Up 
 A   D    Left    Right
   S          Down
+</pre>
 
 There's only one player but both sets of conventional movement keys can be used simultaneously.
 

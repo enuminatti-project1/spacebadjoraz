@@ -14,7 +14,6 @@ public class Bullet implements Movable {
      * Speed the bullet travels at.
      */
     private int speed;
-    private Position limits;
 
     /**
      * Direction the bullet travels to.
@@ -30,7 +29,7 @@ public class Bullet implements Movable {
      *
      * @param shootUp True if bullet shoots up, False if it shoots down
      */
-    public Bullet(int x, int y, boolean shootUp, int bulletPower) {
+    Bullet(int x, int y, boolean shootUp, int bulletPower) {
         this.shootUp = shootUp;
         this.bullet = new Ellipse(x - SIZE / 2, y - SIZE, SIZE, SIZE);
         this.bullet.setColor(Color.YELLOW);
@@ -55,23 +54,9 @@ public class Bullet implements Movable {
     }
 
     @Override
-    public void setLimits(Position limits) {
-
-        this.limits = limits;
-
-    }
-
-    @Override
     public Position getPosition() {
 
         return new Position(bullet.getX(), bullet.getY(), bullet.getWidth(), bullet.getHeight());
-
-    }
-
-    @Override
-    public void setSpeed(int speed) {
-
-        this.speed = speed;
 
     }
 

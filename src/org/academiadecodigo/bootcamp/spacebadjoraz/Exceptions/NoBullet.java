@@ -8,8 +8,4 @@ package org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions;
 public class NoBullet extends Exception {
     public NoBullet() {
     }
-
-    public NoBullet(String message) {
-        super(message);
-    }
 }

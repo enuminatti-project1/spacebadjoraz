@@ -89,7 +89,7 @@ public class Sound {
             System.out.println(ex.getMessage());
         } catch (IllegalArgumentException e){ //Pulse audio em linux
             try {
-                inputStream = AudioSystem.getAudioInputStream(new File(path));
+                inputStream = AudioSystem.getAudioInputStream(new File(path.substring(1)));
                 AudioFormat format = inputStream.getFormat();
                 DataLine.Info info = new DataLine.Info(Clip.class, format);
                 clip = (Clip) AudioSystem.getLine(info);

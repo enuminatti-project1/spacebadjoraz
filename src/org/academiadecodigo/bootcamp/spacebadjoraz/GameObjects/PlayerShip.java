@@ -7,16 +7,11 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by Someone who is not me on 09/10/17.
  */
 public class PlayerShip extends Ship implements KeyboardHandler {
-
-    private Keyboard key;
-    //private Picture pic;    //Picture of the Ship
-
 
     /**
      * This enum should be exclusive to PlayerShip(s) since
@@ -119,9 +114,9 @@ public class PlayerShip extends Ship implements KeyboardHandler {
     /**
      * Set the Keyboard keys to handle
      */
-    public void configKeyboard() {
+    private void configKeyboard() {
 
-        this.key = new Keyboard(this);
+        Keyboard key = new Keyboard(this);
 
         int[] kArray = {
                 KeyboardEvent.KEY_W,

@@ -62,21 +62,21 @@ public class Game {
     private Text plBulletPower;
     private Text enBulletPower;
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
-    public static final int PADDING = 10;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+    private static final int PADDING = 10;
 
-    public static final int PL_WIDTH = 150;
-    public static final int PL_HEIGHT = 600;
+    private static final int PL_WIDTH = 150;
+    private static final int PL_HEIGHT = 600;
 
-    public static final int EN_WIDTH = 150;
-    public static final int EN_HEIGHT = 600;
+    private static final int EN_WIDTH = 150;
+    private static final int EN_HEIGHT = 600;
 
 
     /**
      * Entry door to the game :'D
      *
-     * @param args
+     * @param args Args for the game???
      */
     public static void main(String[] args) {
         Game game = new Game();
@@ -92,7 +92,7 @@ public class Game {
     /**
      * Initialize game objects and background
      */
-    public void init() throws InterruptedException {
+    private void init() throws InterruptedException {
 
         StartScreen s = new StartScreen();
         s.start();
@@ -145,7 +145,7 @@ public class Game {
      * The game loop
      * It runs until there's no enemies.
      */
-    public void play() throws InterruptedException {
+    private void play() throws InterruptedException {
         soundsMap.get(GameSound.FILIPEINTRO).play(true);
         soundsMap.get(GameSound.BGM).loopIndef();
 
@@ -321,7 +321,7 @@ public class Game {
      * This gets all shootables' bullets and saves them so
      * it can move them.
      */
-    public void getBullets() {
+    private void getBullets() {
 
         for (Shootable shootable : shootables) {
             if (shootable == null) {
@@ -330,7 +330,6 @@ public class Game {
 
             try {
                 Bullet newBullet = shootable.getBullet();
-                newBullet.setLimits(gameLimits);
                 bullets.add(newBullet);
                 Sound newSound = soundsMap.get(GameSound.ENEMYBULLET);
                 if (shootable instanceof EnemyShip &&
@@ -351,7 +350,7 @@ public class Game {
 
     }
 
-    public void playIfNotPlaying(Sound clip) {
+    private void playIfNotPlaying(Sound clip) {
         if (!clip.isPlaying()) {
             clip.play(true);
         }
@@ -360,10 +359,10 @@ public class Game {
     /**
      * Deletes the bullet on impact and call the method to make the explosion
      *
-     * @param shootable
-     * @param b
+     * @param shootable give a shootable object
+     * @param b a bullet that will hit that shootable object
      */
-    public void hit(Ship shootable, Bullet b) {
+    private void hit(Ship shootable, Bullet b) {
         int health = shootable.hit(b.getBulletPower());
         b.getBullet().delete();
 
@@ -386,9 +385,9 @@ public class Game {
     /**
      * creates the explosion
      *
-     * @param ship
+     * @param ship ship where the explosion will appear over
      */
-    public void explosion(Ship ship) {
+    private void explosion(Ship ship) {
         Position shipPos = ship.getPosition();
         Picture explosion;
         ArrayList<Picture> pics;
@@ -417,7 +416,7 @@ public class Game {
      *
      * @param ship The ship to update the information
      */
-    public void updateShipInfo(Ship ship) {
+    private void updateShipInfo(Ship ship) {
 
         if (ship instanceof PlayerShip) {
             plNameText.setText("Name: " + ship.getName());

@@ -13,18 +13,6 @@ public interface Movable {
      */
     void move();
 
-    /**
-     * Set the limits where the object can move
-     * @param limits
-     */
-    void setLimits(Position limits);
-
     Position getPosition();
-
-    /**
-     * set the speed of the movement
-     * @param speed
-     */
-    void setSpeed(int speed);
 
 }

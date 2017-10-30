@@ -47,27 +47,20 @@ public class Position {
         return y;
     }
 
-    public int getWidth() {
+    private int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public int getMaxX() {
+    int getMaxX() {
         return x + width;
     }
 
-    public int getMaxY() {
+    int getMaxY() {
         return y + height;
     }
 
-    public int getMidX() {
+    int getMidX() {
         return getX() + (int) (getWidth() / 2.0);
     }
 
-    public int getMidY() {
-        return getY() + (int) (getHeight() / 2.0);
-    }
 }

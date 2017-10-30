@@ -24,7 +24,7 @@ public abstract class Ship implements Movable, Shootable {
     private Text textBulletPower;
     private ShipType type;
 
-    public Ship(Rectangle ship, Position gameLimits,
+    Ship(Rectangle ship, Position gameLimits,
                 int speed, int health, ShipType type,
                 String name, String picPath, int bulletPower) {
         this.ship = ship;
@@ -60,7 +60,7 @@ public abstract class Ship implements Movable, Shootable {
         return type;
     }
 
-    public void setPic(int x , int y, String picPath) {
+    private void setPic(int x , int y, String picPath) {
         this.pic = new Picture(x, y, picPath);
         pic.draw();
     }
@@ -90,12 +90,7 @@ public abstract class Ship implements Movable, Shootable {
         return textBulletPower;
     }
 
-    @Override
-    public void setLimits(Position limits) {
-        this.limits = limits;
-    }
-
-    public Position getLimits() {
+    Position getLimits() {
         return limits;
     }
 
@@ -107,12 +102,8 @@ public abstract class Ship implements Movable, Shootable {
 
     }
 
-    public int getSpeed() {
+    int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     @Override

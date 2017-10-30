@@ -1,7 +1,6 @@
 package org.academiadecodigo.bootcamp.spacebadjoraz.GameObjects;
 
 import org.academiadecodigo.bootcamp.spacebadjoraz.Exceptions.NoBullet;
-import org.academiadecodigo.bootcamp.spacebadjoraz.Shootable;
 import org.academiadecodigo.bootcamp.spacebadjoraz.Utils.Calculations;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -39,7 +38,7 @@ public class EnemyShip extends Ship {
     }
 
     //public EnemyShip(Position gameLimits, int health, String name, String picPath) {
-    public EnemyShip(Position gameLimits, String name, String picPath, int health, int bulletPower){
+    EnemyShip(Position gameLimits, String name, String picPath, int health, int bulletPower){
         super(new Rectangle(Calculations.calcMid(gameLimits.getMidX(), SHIPWIDTH),
                 30, SHIPWIDTH, SHIPHEIGHT), gameLimits, SPEED, health, ShipType.ENEMY,
                 name, picPath, bulletPower);

@@ -42,8 +42,8 @@ SPACE shoots a series of bullets up to 5 in a row.
 
 There's 5 "levels"/"bosses" to clear to clear the game.
 
-Level/Boss 1: Filipe with low health and low hit damage
-Level/Boss 2: Pedro  with a bit more health and double hit damage
-Level/Boss 3: Jorge  with medium health and triple hit damage
-Level/Boss 4: Catarina with high health and high hit damage
+Level/Boss 1: Filipe with low health and low hit damage<br>
+Level/Boss 2: Pedro  with a bit more health and double hit damage<br>
+Level/Boss 3: Jorge  with medium health and triple hit damage<br>
+Level/Boss 4: Catarina with high health and high hit damage<br>
 Final Boss  : Ferrão, the god of programming, health sponge and hits like a truck
